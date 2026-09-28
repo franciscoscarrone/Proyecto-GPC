@@ -1,0 +1,1633 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gran Parque Central 3D</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gran Parque Central 3D">
+<meta property="og:description" content="Guía interactiva no oficial del anteproyecto del Gran Parque Central, con modelo 3D por etapas, capas y recintos.">
+<meta name="theme-color" content="#0B3A9E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='3' y='3' width='10' height='10' rx='1.5' fill='%23D12026'/%3E%3C/svg%3E">
+
+<meta name="description" content="Guía interactiva y no oficial del anteproyecto «Concurso de ideas Plan Maestro Definitivo del Gran Parque Central», con modelo 3D esquemático.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+[hidden]{display:none!important}
+img{max-width:100%}
+:root{
+  color-scheme: light;
+  --ground:#EBF0F5;
+  --surface:#FFFFFF;
+  --surface-2:#F4F7FA;
+  --ink:#0E1A2F;
+  --ink-2:#43526B;
+  --muted:#5E6B80;
+  --line:#D6DDE7;
+  --line-2:#C2CCD9;
+  --blue:#0B3A9E;
+  --blue-soft:#E2EAF8;
+  --red:#D12026;
+  --red-soft:#FBE4E5;
+  --on-accent:#FFFFFF;
+  --stage-top:#D5DFE9;
+  --stage-bot:#EDF2F6;
+  --series:#0B3A9E;
+  --series-2:#6F8DD3;
+  --grid:#E1E7EF;
+  --good:#0ca30c;
+  --warn:#fab219;
+  --serious:#ec835a;
+  --critical:#d03b3b;
+  --shadow:0 1px 2px rgba(14,26,47,.06),0 10px 28px rgba(14,26,47,.10);
+  --topbar:56px;
+  --f-display:"Big Shoulders Display","Big Shoulders","Arial Narrow","Roboto Condensed",sans-serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0A1120; --surface:#111B2E; --surface-2:#16223A; --ink:#E8EEF7; --ink-2:#B2BED2; --muted:#8C98AE;
+    --line:#233049; --line-2:#31405E; --blue:#8AAAF5; --blue-soft:#1A2A4E; --red:#F0474C; --red-soft:#3B161A; --on-accent:#0A1120;
+    --stage-top:#0A1326; --stage-bot:#131F37; --series:#8AAAF5; --series-2:#5A79C0; --grid:#1F2B42;
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0A1120; --surface:#111B2E; --surface-2:#16223A; --ink:#E8EEF7; --ink-2:#B2BED2; --muted:#8C98AE;
+  --line:#233049; --line-2:#31405E; --blue:#8AAAF5; --blue-soft:#1A2A4E; --red:#F0474C; --red-soft:#3B161A; --on-accent:#0A1120;
+  --stage-top:#0A1326; --stage-bot:#131F37; --series:#8AAAF5; --series-2:#5A79C0; --grid:#1F2B42;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 16px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button{font:inherit;color:inherit}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Top bar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar-in{height:var(--topbar);display:flex;align-items:center;gap:18px;padding-inline:16px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none;text-decoration:none;color:var(--ink)}
+.brand b{font:800 22px/1 var(--f-display);text-transform:uppercase;letter-spacing:.01em}
+.brand small{font:500 10.5px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.brand small{white-space:nowrap}
+@media (max-width:640px){ .brand small{display:none} }
+.brand .short{display:none}
+@media (max-width:760px){ .brand .full{display:none} .brand .short{display:inline} .topbar-in{gap:6px} }
+.brand i{display:inline-block;width:9px;height:9px;background:var(--red);border-radius:1px;transform:translateY(-1px)}
+.chapnav{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 24px),transparent 100%)}
+.chapnav::-webkit-scrollbar{display:none}
+.chapnav ol{list-style:none;margin:0;padding:0 12px;display:flex;gap:2px;white-space:nowrap}
+.chapnav a{display:block;padding:8px 10px 7px;font:500 11.5px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;border-bottom:2px solid transparent;border-radius:0}
+.chapnav a:hover{color:var(--ink)}
+.chapnav a[aria-current="true"]{color:var(--ink);border-bottom-color:var(--red)}
+
+/* ---------- Layout ---------- */
+.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(380px,1fr)}
+.stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--topbar));height:calc(100vh - var(--topbar) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));height:calc(100dvh - var(--topbar) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:hidden;background:linear-gradient(180deg,var(--stage-top),var(--stage-bot));border-right:1px solid var(--line)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
+.stage canvas:active{cursor:grabbing}
+.content{min-width:0;padding-inline:40px;background:var(--ground)}
+@media (max-width:980px){
+  .layout{display:block}
+  .stage{height:46vh;min-height:280px;max-height:520px;border-right:0;border-bottom:1px solid var(--line);z-index:20}
+  .content{padding-inline:18px}
+}
+
+/* ---------- Stage overlays ---------- */
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lb{position:absolute;left:0;top:0;will-change:transform;transition:opacity .25s;white-space:nowrap}
+.lb>span{display:inline-flex;align-items:center;gap:6px;transform:translate(-50%,-100%);margin-top:-8px;padding:4px 8px 4px 7px;border-radius:6px;background:var(--surface);color:var(--ink);font:500 11px/1.2 var(--f-mono);letter-spacing:.02em;box-shadow:var(--shadow);border:1px solid var(--line)}
+.lb>span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);flex:none}
+.lb.red>span::before{background:var(--red)}
+.lb.street>span{background:transparent;border:0;box-shadow:none;color:var(--ink-2);font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;padding:0;transform:translate(-50%,-50%);margin:0}
+.lb.street>span::before{display:none}
+.lb.layer>span{flex-direction:column;align-items:flex-start;gap:1px;transform:translate(0,-50%);margin:0}
+.lb.layer>span::before{display:none}
+.lb.layer b{font:700 15px/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
+.lb.layer small{font:500 10.5px/1.2 var(--f-mono);color:var(--muted)}
+@media (max-width:640px){ .lb.layer small{display:none} .lb.layer b{font-size:12px} .lb>span{font-size:10px;padding:3px 6px} }
+.lb.pin>span{background:var(--red);color:#fff;border-color:transparent}
+.lb.pin>span::before{background:#fff}
+.lb.stop>span{padding-left:4px}
+.lb.stop>span::before{display:none}
+.lb.stop em{font-style:normal;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:10px}
+.lb.stop.on em{background:var(--red);color:#fff}
+.lb.hide{opacity:0}
+.stage-cap{position:absolute;left:14px;top:14px;display:flex;gap:8px;align-items:center;max-width:calc(100% - 28px);pointer-events:none}
+.stage-cap span{padding:6px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);font:500 11.5px/1.2 var(--f-mono);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stage-cap span b{color:var(--red);font-weight:500}
+.tools{position:absolute;left:14px;bottom:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;max-width:calc(100% - 28px)}
+.tools-r{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:6px}
+.pillbar{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px;box-shadow:var(--shadow)}
+.pillbar button{border:0;background:transparent;padding:6px 12px;border-radius:999px;font:600 12.5px/1 var(--f-body);cursor:pointer;color:var(--ink-2)}
+.pillbar button[aria-pressed="true"],.pillbar button[aria-checked="true"]{background:var(--ink);color:var(--surface)}
+.iconbtn{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);cursor:pointer;color:var(--ink)}
+.iconbtn svg{width:18px;height:18px}
+.hint{position:absolute;right:62px;bottom:18px;font:500 10.5px/1.3 var(--f-mono);color:var(--ink-2);letter-spacing:.04em;text-align:right;pointer-events:none;opacity:.85}
+.fallback{position:absolute;inset:0;display:grid;place-items:end start;background:#0b1426 center/cover no-repeat}
+.fallback p{margin:0 0 70px 14px;padding:8px 12px;border-radius:8px;background:var(--surface);font-size:13px;max-width:320px}
+@media (max-width:980px){ .hint{display:none} .stage-cap span{font-size:10.5px} }
+@media (max-width:520px){ .tools{gap:6px} .pillbar button{padding:6px 10px;font-size:12px} }
+
+/* ---------- Chapters ---------- */
+.chapter{padding-block:64px 56px;border-top:1px solid var(--line);max-width:640px}
+.chapter:first-child{border-top:0;padding-top:44px}
+.kicker{display:flex;gap:10px;align-items:center;font:500 11px/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.kicker::before{content:"";width:18px;height:2px;background:var(--red)}
+h1,h2{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.005em;line-height:.92;margin:0 0 16px;text-wrap:balance;color:var(--ink)}
+h1{font-size:clamp(44px,4.6vw,70px)}
+h2{font-size:clamp(36px,4.4vw,52px)}
+h3{font:700 13px/1.3 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;margin:34px 0 12px;color:var(--ink)}
+.lead{font-size:18px;line-height:1.5;color:var(--ink-2);max-width:48ch;margin:0 0 22px}
+p{margin:0 0 14px;max-width:62ch}
+.src{font:400 11px/1.4 var(--f-mono);color:var(--muted);letter-spacing:.02em;margin-top:14px}
+.src a{color:inherit}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 18px;margin:26px 0 8px}
+.stat{border-top:2px solid var(--ink);padding-top:10px}
+.stat .v{font:600 clamp(28px,3.2vw,40px)/1 var(--f-body);letter-spacing:-.01em}
+.stat .v small{font-size:.5em;font-weight:600;color:var(--ink-2);margin-left:2px}
+.stat .l{font-size:13.5px;color:var(--ink-2);margin-top:6px;line-height:1.35}
+.stat.red{border-top-color:var(--red)}
+.stat.wide{grid-column:1/-1}
+.arrow{color:var(--red);font-weight:500;margin:0 .12em}
+
+/* controls */
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 18px}
+.seg button{border:1px solid var(--line-2);background:var(--surface);padding:8px 13px;border-radius:999px;font:600 13px/1 var(--f-body);cursor:pointer;color:var(--ink-2);transition:background .15s,color .15s,border-color .15s}
+.seg button:hover{border-color:var(--ink-2);color:var(--ink)}
+.seg button[aria-checked="true"],.seg button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--on-accent)}
+.seg.small button{padding:7px 11px;font-size:12.5px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ink);background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:999px;font:600 13.5px/1 var(--f-body);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn svg{width:15px;height:15px}
+.range{width:100%;accent-color:var(--red);margin:6px 0 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px}
+.card+.card{margin-top:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0;padding:0;list-style:none}
+.chips li{padding:6px 10px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);font-size:13px;color:var(--ink-2);line-height:1.25}
+.chips li b{color:var(--ink);font-weight:600}
+.chips.red li{background:var(--red-soft);border-color:transparent;color:var(--ink)}
+
+/* diagnóstico */
+.diag{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
+.diag li{padding:12px 12px 11px;border-radius:10px;background:var(--surface);border:1px solid var(--line)}
+.diag b{display:block;font-size:14px;margin-bottom:3px}
+.diag span{font-size:13px;color:var(--ink-2);line-height:1.35;display:block}
+
+/* timeline */
+.tl{margin:18px 0 0}
+.tl-years{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.tl-years button{flex:none;border:0;background:transparent;padding:10px 8px 8px;font:600 14px/1 var(--f-body);color:var(--muted);cursor:pointer;border-bottom:2px solid var(--line);font-variant-numeric:tabular-nums}
+.tl-years button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--red)}
+.tl-card{margin-top:12px;min-height:118px}
+.tl-card .y{font:800 40px/1 var(--f-display);color:var(--red)}
+.tl-card .t{font-weight:700;margin:6px 0 4px}
+.tl-card p{font-size:14.5px;color:var(--ink-2);margin:0}
+
+/* figures */
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0 0}
+.figs.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fig{margin:0;position:relative;border-radius:8px;overflow:hidden;background:var(--surface-2);cursor:zoom-in;border:0;padding:0;display:block;width:100%}
+.fig img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;max-width:100%;transition:transform .4s}
+.fig:hover img{transform:scale(1.04)}
+.fig.wide{grid-column:1/-1}
+.fig.wide img{aspect-ratio:16/9}
+.fig.contain img{object-fit:contain;background:#fff}
+
+/* etapas */
+.etapa-ui{display:grid;gap:12px;margin-top:16px}
+.etapa-top{display:flex;align-items:center;gap:10px}
+.etapa-top .num{font:800 54px/.9 var(--f-display);color:var(--red);min-width:2.2ch;font-variant-numeric:tabular-nums}
+.etapa-top .num.neutral{color:var(--ink)}
+.etapa-top .tt{font-weight:700;font-size:17px;line-height:1.2}
+.etapa-top .lv{font:500 11px/1.3 var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.ticks{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;margin-top:4px}
+.ticks button{height:30px;border:0;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);font:600 11px/1 var(--f-mono);color:var(--muted);cursor:pointer;padding:0}
+.ticks button.done{background:var(--blue-soft);color:var(--ink-2);border-color:transparent}
+.ticks button[aria-current="true"]{background:var(--red);color:#fff;border-color:var(--red)}
+.ticks button.all{font-size:10px}
+.etapa-card h4{margin:0 0 6px;font:600 12px/1.2 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.etapa-card ul.ob{margin:0 0 12px;padding-left:18px}
+.etapa-card ul.ob li{font-size:14.5px;margin:2px 0}
+.note{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;background:var(--red-soft);font-size:13.5px;margin-top:10px}
+.note svg{flex:none;width:16px;height:16px;margin-top:2px;color:var(--red)}
+
+/* charts */
+.chart{margin-top:12px}
+.cap-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
+.cap-head .big{font:600 44px/1 var(--f-body);letter-spacing:-.01em}
+.cap-head .sub{color:var(--ink-2);font-size:14px}
+.bars{display:grid;grid-template-columns:auto 1fr;gap:9px 12px;align-items:center}
+.bars .bl{font-size:13.5px;color:var(--ink-2);white-space:nowrap}
+.bars .bt{position:relative;height:14px}
+.bars .bt i{position:absolute;left:0;top:0;bottom:0;background:var(--series);border-radius:0 4px 4px 0;transition:width .5s cubic-bezier(.2,.7,.2,1);min-width:2px}
+.bars .bt em{position:absolute;top:50%;transform:translateY(-50%);font:600 12.5px/1 var(--f-body);font-style:normal;color:var(--ink);white-space:nowrap;padding-left:8px;transition:left .5s cubic-bezier(.2,.7,.2,1);font-variant-numeric:tabular-nums}
+.axis-note{font:400 11px/1.3 var(--f-mono);color:var(--muted);margin-top:10px}
+details.tbl{margin-top:12px}
+details.tbl summary{cursor:pointer;font:500 12px/1.3 var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.tscroll{overflow-x:auto;margin-top:8px}
+table{border-collapse:collapse;font-size:13px;width:100%}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font:600 11px/1.2 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin:8px 0 2px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+svg.viz{width:100%;height:auto;display:block;overflow:visible}
+svg.viz text{font-family:var(--f-body)}
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:8px;padding:8px 10px;font-size:12.5px;line-height:1.35;max-width:260px;opacity:0;transition:opacity .12s}
+.tip b{display:block;font-size:15px}
+.tip .k{display:inline-block;width:14px;height:2px;vertical-align:middle;margin-right:6px}
+
+/* visibility */
+.vis-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--ink-2);margin-top:8px}
+.vis-legend span{display:inline-flex;gap:6px;align-items:center}
+.vis-legend i{width:16px;height:16px;border-radius:4px;display:inline-grid;place-items:center;font:700 10px/1 var(--f-body);font-style:normal}
+.vis-notes{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px}
+.vis-notes li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px}
+.vis-notes li b{color:var(--ink);font-weight:600;min-width:0}
+.scen{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:10px 0 6px}
+.scen button{border:1px solid var(--line-2);background:var(--surface);border-radius:8px;padding:8px 4px;cursor:pointer;display:grid;gap:2px;text-align:center}
+.scen button b{font-size:13px;font-weight:700}
+.scen button small{font:400 10px/1.2 var(--f-mono);color:var(--muted)}
+.scen button[aria-checked="true"]{border-color:var(--blue);background:var(--blue-soft)}
+.scen button.prop b{color:var(--red)}
+@media (max-width:520px){ .scen{grid-template-columns:repeat(3,1fr)} }
+
+/* lists */
+.facts{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:0}
+.facts li{display:grid;grid-template-columns:minmax(92px,auto) 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:14.5px;align-items:baseline}
+.facts li:last-child{border-bottom:1px solid var(--line)}
+.facts b{font:600 17px/1.2 var(--f-body);white-space:nowrap}
+.facts span{color:var(--ink-2)}
+
+/* paseo */
+.stops{list-style:none;counter-reset:s;margin:12px 0 0;padding:0;display:grid;gap:4px}
+.stops button{width:100%;display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 12px;cursor:pointer}
+.stops button em{font-style:normal;display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--surface);font:600 12px/1 var(--f-mono);flex:none}
+.stops button[aria-current="true"]{border-color:var(--red)}
+.stops button[aria-current="true"] em{background:var(--red);color:#fff}
+.stops button span{font-size:14px}
+.stops button small{display:block;font-size:12px;color:var(--muted)}
+
+/* accesos */
+.acc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 12px}
+.acc-card{min-height:92px}
+.acc-card b{display:block;font-size:17px;margin-bottom:4px}
+.acc-card p{font-size:14.5px;color:var(--ink-2);margin:0}
+
+/* numeros */
+.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+.num-t{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 12px 11px;text-align:left;display:block;width:100%}
+button.num-t{cursor:pointer}
+button.num-t:hover{border-color:var(--ink-2)}
+.num-t[aria-pressed="true"]{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
+.num-t .v{font:600 24px/1.05 var(--f-body);letter-spacing:-.01em;display:block}
+.num-t .l{font-size:13px;color:var(--ink-2);line-height:1.3;display:block;margin-top:4px}
+.num-t .go{font:500 10px/1 var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:8px;display:block}
+.num-t[aria-pressed="true"] .go{color:var(--red)}
+
+/* galería */
+.gal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+.gal .fig:nth-child(5n+1){grid-column:1/-1}
+.gal .fig:nth-child(5n+1) img{aspect-ratio:16/9}
+
+/* equipo */
+.team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;margin-top:16px}
+.team h4{margin:0 0 6px;font:600 11px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.team ul{list-style:none;margin:0;padding:0;font-size:14.5px;line-height:1.5}
+.disclaimer{margin-top:28px;padding:14px 16px;border-radius:10px;border:1px dashed var(--line-2);font-size:13.5px;color:var(--ink-2)}
+.disclaimer b{color:var(--ink)}
+footer.end{padding:28px 0 60px;font:400 11px/1.5 var(--f-mono);color:var(--muted)}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(6,10,20,.92);display:grid;grid-template-rows:1fr auto;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.lightbox img{max-width:100%;max-height:100%;margin:auto;display:block;object-fit:contain;border-radius:6px;min-height:0}
+.lightbox .lb-foot{display:flex;gap:12px;align-items:center;justify-content:space-between;color:#e6ecf5;padding-top:12px;font-size:14px}
+.lightbox .lb-foot small{display:block;font:400 11px/1.3 var(--f-mono);color:#9fb0c8;margin-top:3px}
+.lightbox .lb-btns{display:flex;gap:6px;flex:none}
+.lightbox .lb-btns button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:grid;place-items:center}
+.lightbox .lb-img{min-height:0;display:flex}
+
+@media (max-width:520px){
+  .stats{gap:14px 16px}
+  .diag,.nums,.team{grid-template-columns:1fr 1fr}
+  .figs{grid-template-columns:1fr 1fr}
+  .figs .fig:first-child{grid-column:1/-1}
+  .facts li{grid-template-columns:1fr;gap:2px}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important;animation:none!important} }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#inicio" aria-label="Gran Parque Central, inicio"><i aria-hidden="true"></i><b class="full">Gran Parque Central</b><b class="short" aria-hidden="true">GPC</b><small>Anteproyecto · guía 3D</small></a>
+    <nav class="chapnav" aria-label="Capítulos">
+      <ol id="chapnav">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#historia">Historia</a></li>
+        <li><a href="#concepto">Concepto</a></li>
+        <li><a href="#complejo">Complejo</a></li>
+        <li><a href="#etapas">Etapas</a></li>
+        <li><a href="#estadio">Estadio</a></li>
+        <li><a href="#arena">Arena</a></li>
+        <li><a href="#plaza">Plaza</a></li>
+        <li><a href="#museos">Museos</a></li>
+        <li><a href="#llegada">Llegada</a></li>
+        <li><a href="#numeros">Números</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#equipo">Equipo</a></li>
+      </ol>
+    </nav>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="stage" id="stage" aria-label="Modelo 3D del complejo">
+    <canvas id="gl" aria-label="Modelo 3D interactivo. Arrastrá para girar."></canvas>
+    <div class="labels" id="labels" aria-hidden="true"></div>
+    <div class="stage-cap" aria-live="polite"><span id="stageCap">Propuesta</span></div>
+    <div class="tools">
+      <div class="pillbar" role="radiogroup" aria-label="Estado del estadio">
+        <button type="button" role="radio" aria-checked="false" data-hp="hoy">Hoy</button>
+        <button type="button" role="radio" aria-checked="true" data-hp="prop">Propuesta</button>
+      </div>
+      <div class="pillbar" role="radiogroup" aria-label="Iluminación">
+        <button type="button" role="radio" aria-checked="true" data-dn="day">Día</button>
+        <button type="button" role="radio" aria-checked="false" data-dn="night">Noche</button>
+      </div>
+    </div>
+    <div class="tools-r">
+      <button type="button" class="iconbtn" id="zin" aria-label="Acercar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button type="button" class="iconbtn" id="zout" aria-label="Alejar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+      <button type="button" class="iconbtn" id="zreset" aria-label="Volver a la vista del capítulo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
+    </div>
+    <div class="hint" id="hint">Arrastrá para girar · Ctrl + rueda o pellizco para acercar</div>
+    <div class="fallback" id="fallback" hidden><p>El modelo 3D no pudo cargarse en este navegador. El resto de la guía funciona igual.</p></div>
+  </section>
+
+  <div class="content" id="content">
+
+    <!-- INICIO -->
+    <section class="chapter" id="inicio" data-ch="inicio">
+      <p class="kicker">Concurso de ideas · Plan maestro definitivo</p>
+      <h1>El nuevo Gran Parque Central</h1>
+      <p class="lead">El estadio de 1900 no se muda: se completa, se techa y abre todo el año en La Blanqueada.</p>
+      <div class="stats">
+        <div class="stat red wide"><div class="v">34.000<span class="arrow">→</span>44.000</div><div class="l">espectadores, hoy y con el proyecto</div></div>
+        <div class="stat"><div class="v">3</div><div class="l">recintos: estadio, arena y Plaza del Hincha</div></div>
+        <div class="stat"><div class="v">14</div><div class="l">etapas de obra sin cerrar el estadio (salvo las etapas 3 y 4)</div></div>
+        <div class="stat"><div class="v">48.000<small>m²</small></div><div class="l">de terreno propio en el medio de la ciudad</div></div>
+      </div>
+      <div class="row" style="margin-top:22px">
+        <button class="btn" type="button" data-hp="hoy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Ver el estadio hoy</button>
+        <button class="btn ghost" type="button" data-hp="prop">Ver la propuesta</button>
+      </div>
+      <p class="src">Propuesta de Guerra de Rossa · Tribuna Sur · Varesi Arquitectos (junio de 2025). Fuente: anteproyecto, págs. 6–13 y 42.</p>
+    </section>
+
+    <!-- HISTORIA -->
+    <section class="chapter" id="historia" data-ch="historia">
+      <p class="kicker">Historia y diagnóstico · págs. 7–13</p>
+      <h2>125 años en La Blanqueada</h2>
+      <p class="lead">El estadio más antiguo de América aún en funcionamiento creció por capas: cuatro tribunas de épocas distintas, unidas solo por un codo.</p>
+      <div class="tl" id="timeline">
+        <div class="tl-years" role="tablist" aria-label="Años" id="tlYears"></div>
+        <div class="tl-card card" id="tlCard" role="tabpanel"></div>
+      </div>
+      <div class="figs">
+        <button class="fig" type="button" data-img="historia-tribuna"><img src="img/historia-tribuna.jpg" alt="Foto histórica de una tribuna colmada de público" loading="lazy"></button>
+        <button class="fig" type="button" data-img="historia-aereo"><img src="img/historia-aereo.jpg" alt="Vista aérea histórica del estadio" loading="lazy"></button>
+        <button class="fig" type="button" data-img="hoy-aereo"><img src="img/hoy-aereo.jpg" alt="Vista aérea actual del estadio en el barrio" loading="lazy"></button>
+      </div>
+      <h3>Diagnóstico de hoy</h3>
+      <ul class="diag">
+        <li><b>Modernización parcial</b><span>Tribunas y palcos renovados conviven con sectores deteriorados.</span></li>
+        <li><b>Baja eficiencia energética</b><span>LED solo en parte, sin una estrategia integral.</span></li>
+        <li><b>Sin gestión ambiental</b><span>Sin políticas claras de reciclaje ni de uso del agua.</span></li>
+        <li><b>Accesibilidad deficiente</b><span>Rampas inadecuadas, baños no adaptados, poca señalización.</span></li>
+        <li><b>Poca digitalización</b><span>Conectividad baja y escasa innovación tecnológica.</span></li>
+        <li><b>Subutilizado sin partidos</b><span>Espacio infrautilizado fuera de los eventos deportivos.</span></li>
+      </ul>
+      <p class="src">Fuente: págs. 8 y 13.</p>
+    </section>
+
+    <!-- CONCEPTO -->
+    <section class="chapter" id="concepto" data-ch="concepto">
+      <p class="kicker">Memoria conceptual · págs. 15–19</p>
+      <h2>De estadio a supermanzana</h2>
+      <p class="lead">Seis movimientos, tal como los dibuja el anteproyecto. Tocá cada uno y mirá el modelo.</p>
+      <div class="seg" role="radiogroup" aria-label="Pasos del concepto" id="conceptSeg">
+        <button type="button" role="radio" aria-checked="true" data-c="1">1 · Hoy</button>
+        <button type="button" role="radio" aria-checked="false" data-c="2">2 · Volumen capaz</button>
+        <button type="button" role="radio" aria-checked="false" data-c="3">3 · Supermanzana</button>
+        <button type="button" role="radio" aria-checked="false" data-c="4">4 · Cierre del bowl</button>
+        <button type="button" role="radio" aria-checked="false" data-c="5">5 · Techo</button>
+        <button type="button" role="radio" aria-checked="false" data-c="6">6 · Crecer</button>
+      </div>
+      <div class="card" id="conceptCard" aria-live="polite"></div>
+      <div class="figs two">
+        <button class="fig wide" type="button" data-img="aerial-complejo"><img src="img/aerial-complejo.jpg" alt="Render aéreo: plaza, terraza con canchas de tenis y el estadio" loading="lazy"></button>
+      </div>
+      <p class="src">Fuente: págs. 15–19 y 43.</p>
+    </section>
+
+    <!-- COMPLEJO -->
+    <section class="chapter" id="complejo" data-ch="complejo">
+      <p class="kicker">El complejo · págs. 19–25 y 42</p>
+      <h2>Tres recintos, un solo edificio</h2>
+      <p class="lead">Estadio, arena y plaza funcionan por separado o juntos. Un mismo día puede haber un recital en la arena, una feria en la plaza y un entrenamiento abierto en el estadio.</p>
+      <div class="seg" role="radiogroup" aria-label="Recinto" id="recSeg">
+        <button type="button" role="radio" aria-checked="true" data-r="todos">Los tres</button>
+        <button type="button" role="radio" aria-checked="false" data-r="estadio">Estadio</button>
+        <button type="button" role="radio" aria-checked="false" data-r="arena">Arena</button>
+        <button type="button" role="radio" aria-checked="false" data-r="plaza">Plaza del Hincha</button>
+      </div>
+      <div class="card" id="recCard" aria-live="polite"></div>
+
+      <h3>Capas del edificio</h3>
+      <p>Separá las capas para ver cómo se apilan, del estacionamiento a la cubierta.</p>
+      <label class="visually-hidden" for="explode">Separar capas</label>
+      <input class="range" type="range" id="explode" min="0" max="100" value="0" aria-label="Separar capas">
+      <div class="row" style="justify-content:space-between;font:500 11px/1 var(--f-mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:4px"><span>Juntas</span><span>Separadas</span></div>
+      <ul class="facts" style="margin-top:16px">
+        <li><b>+40,30</b><span>Cubierta: techo continuo sobre todas las butacas</span></li>
+        <li><b>+27,60</b><span>Lounges de hospitalidad suspendidos en las esquinas</span></li>
+        <li><b>+14,90</b><span>Terraza jardín: canchas, pista y áreas verdes</span></li>
+        <li><b>+3,50 / +7,00</b><span>Zócalo de acceso escalonado: la plataforma 360° que conecta todo</span></li>
+        <li><b>−2,60 / −5,20</b><span>Estacionamientos bajo la plaza y la arena</span></li>
+      </ul>
+
+      <h3>Abierto 24/7</h3>
+      <ul class="chips">
+        <li>Club social y sede</li><li>Oficinas y corporate</li><li>Educación y salud deportivas</li><li>Hotel o alojamiento</li><li>Locales y gastronomía</li><li>Museos</li>
+      </ul>
+      <p style="margin-top:14px;font-size:14.5px;color:var(--ink-2)">Sostenibilidad: paneles fotovoltaicos y colectores solares, reuso de agua de lluvia y aguas grises, techos vegetales y un sistema de gestión (BMS) para todo el complejo.</p>
+      <div class="figs two">
+        <button class="fig" type="button" data-img="terraza"><img src="img/terraza.jpg" alt="Render de la terraza y la escalera roja de acceso" loading="lazy"></button>
+        <button class="fig" type="button" data-img="aerial-barrio"><img src="img/aerial-barrio.jpg" alt="Render aéreo del complejo en el barrio" loading="lazy"></button>
+      </div>
+      <p class="src">Fuente: págs. 19, 23, 25, 35, 42, 97 (plantas −1 y −2) y 106 (planta de techos).</p>
+    </section>
+
+    <!-- ETAPAS -->
+    <section class="chapter" id="etapas" data-ch="etapas">
+      <p class="kicker">Etapabilidad · págs. 38–41</p>
+      <h2>14 etapas, el Parque abierto</h2>
+      <p class="lead">Cada etapa suma obra y nuevos ingresos. En rojo, lo que se construye en la etapa elegida.</p>
+      <div class="etapa-ui">
+        <div class="etapa-top">
+          <div class="num" id="etNum">1</div>
+          <div><div class="tt" id="etTitle"></div><div class="lv" id="etLevels"></div></div>
+        </div>
+        <div class="ticks" id="etTicks" role="group" aria-label="Elegir etapa"></div>
+        <div class="row">
+          <button class="btn" type="button" id="etPlay"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg><span>Reproducir</span></button>
+          <button class="btn ghost" type="button" id="etPrev" aria-label="Etapa anterior">←</button>
+          <button class="btn ghost" type="button" id="etNext" aria-label="Etapa siguiente">→</button>
+        </div>
+        <div class="card etapa-card" id="etCard" aria-live="polite"></div>
+      </div>
+      <p class="src">Fuente: págs. 38–42 y 71 (etapas de la cubierta).</p>
+    </section>
+
+    <!-- ESTADIO -->
+    <section class="chapter" id="estadio" data-ch="estadio">
+      <p class="kicker">El estadio · págs. 45–79</p>
+      <h2>Más cerca, más alto, techado</h2>
+      <p class="lead">Una tribuna baja continua de 360°, la cancha 75 cm más abajo y un techo que cubre todas las butacas.</p>
+      <div class="seg small" role="radiogroup" aria-label="Vista del estadio" id="estSeg">
+        <button type="button" role="radio" aria-checked="true" data-e="bowl">Gradas 360°</button>
+        <button type="button" role="radio" aria-checked="false" data-e="techo">Estructura del techo</button>
+        <button type="button" role="radio" aria-checked="false" data-e="cancha">Bajar la cancha</button>
+      </div>
+      <div class="card" id="estCard" aria-live="polite"></div>
+
+      <h3>Capacidad por modo</h3>
+      <div class="seg small" role="radiogroup" aria-label="Modo de capacidad" id="capSeg"></div>
+      <div class="card chart" id="capChart"></div>
+
+      <h3>Bajar la cancha: visibilidad</h3>
+      <p style="font-size:14.5px;color:var(--ink-2)">El anteproyecto estudió cinco niveles de cancha. Elegí uno y mirá cómo quedan las tribunas.</p>
+      <div class="scen" role="radiogroup" aria-label="Escenario de nivel de cancha" id="scenSeg"></div>
+      <div class="card" id="visCard"></div>
+
+      <h3>Puntaje del estadio</h3>
+      <p style="font-size:14.5px;color:var(--ink-2)">Más de 700 ítems de FIFA, UEFA y CONMEBOL, en una escala de 1 a 5. Para competencias oficiales hace falta 4,25 (85 %).</p>
+      <div class="card chart" id="scoreChart"></div>
+
+      <ul class="facts">
+        <li><b>80 %</b><span>de la nueva capacidad dentro de la distancia ideal de visión (hoy, 85 %); máximo 177 m, bajo los 190 m recomendados</span></li>
+        <li><b>60 mm</b><span>de valor C mínimo en todo el bowl; la mayoría llega a 90 mm o más</span></li>
+        <li><b>480</b><span>asientos accesibles en todos los sectores (hoy, unos 50)</span></li>
+        <li><b>2 × 100 m²</b><span>pantallas de 13,3 × 7,5 m y una cinta LED continua; 92 % del público las ve</span></li>
+      </ul>
+      <div class="figs">
+        <button class="fig" type="button" data-img="bowl-hinchada"><img src="img/bowl-hinchada.jpg" alt="Render del estadio lleno bajo el techo" loading="lazy"></button>
+        <button class="fig" type="button" data-img="bowl-arco"><img src="img/bowl-arco.jpg" alt="Render de la cancha vista desde el arco" loading="lazy"></button>
+        <button class="fig" type="button" data-img="lounge"><img src="img/lounge.jpg" alt="Render de un lounge de hospitalidad mirando la cancha" loading="lazy"></button>
+      </div>
+      <p class="src">Fuente: págs. 45, 58–79.</p>
+    </section>
+
+    <!-- ARENA -->
+    <section class="chapter" id="arena" data-ch="arena">
+      <p class="kicker">El polideportivo · págs. 81–85</p>
+      <h2>Una arena para el club</h2>
+      <p class="lead">Básquetbol, futsal, handbol y vóleibol, masculino y femenino, más espectáculos. Comparte prensa, logística y áreas médicas con el estadio.</p>
+      <div class="seg" role="radiogroup" aria-label="Configuración de la arena" id="arenaSeg"></div>
+      <div class="card" id="arenaCard" aria-live="polite"></div>
+      <ul class="facts">
+        <li><b>40 × 20 m</b><span>de cancha, con 12,5 m de altura libre</span></li>
+        <li><b>1.940 m²</b><span>de arena multievento</span></li>
+        <li><b>4 pantallas</b><span>en un cubo suspendido sobre la cancha</span></li>
+        <li><b>Arriba</b><span>la terraza con las canchas de tenis, que miran a la plaza</span></li>
+      </ul>
+      <div class="figs two">
+        <button class="fig" type="button" data-img="arena-basquet"><img src="img/arena-basquet.jpg" alt="Render de la arena en un partido de básquetbol" loading="lazy"></button>
+        <button class="fig" type="button" data-img="arena-escenario"><img src="img/arena-escenario.jpg" alt="Render de la arena con un escenario" loading="lazy"></button>
+      </div>
+      <p class="src">Fuente: págs. 41, 81–85.</p>
+    </section>
+
+    <!-- PLAZA -->
+    <section class="chapter" id="plaza" data-ch="plaza">
+      <p class="kicker">La Plaza del Hincha · págs. 87–89</p>
+      <h2>La previa tiene lugar</h2>
+      <p class="lead">Una plaza abierta de 3.969 m² frente a la espalda de la Abdón Porte, con un muro LED para seguir a Nacional cuando juega afuera.</p>
+      <div class="seg" role="radiogroup" aria-label="Configuración de la plaza" id="plazaSeg"></div>
+      <ul class="facts">
+        <li><b>40 × 15 m</b><span>de muro multimedia sobre la fachada de la tribuna Abdón Porte</span></li>
+        <li><b>8.000 m²</b><span>con buena visibilidad de la pantalla: hasta 32.000 personas en los niveles 1 y 2</span></li>
+        <li><b>Braga</b><span>por Comendador Braga se llega a la plaza, al estadio y a la arena</span></li>
+      </ul>
+      <div class="figs">
+        <button class="fig" type="button" data-img="plaza-noche"><img src="img/plaza-noche.jpg" alt="Render nocturno de la plaza con el edificio de la arena" loading="lazy"></button>
+        <button class="fig" type="button" data-img="plaza-dia"><img src="img/plaza-dia.jpg" alt="Render de la plaza de día" loading="lazy"></button>
+        <button class="fig" type="button" data-img="plaza-escenario"><img src="img/plaza-escenario.jpg" alt="Render de un escenario armado en la plaza" loading="lazy"></button>
+      </div>
+      <p class="src">Fuente: págs. 32, 87–89.</p>
+    </section>
+
+    <!-- MUSEOS -->
+    <section class="chapter" id="museos" data-ch="museos">
+      <p class="kicker">Museos y patrimonio · págs. 27–28 y 91</p>
+      <h2>La historia, a la vista</h2>
+      <p class="lead">Dos museos bajo la Atilio García, con entrada propia por Urquiza: uno del Club Nacional de Football y otro de los Mundiales FIFA. En total, 3.100 m².</p>
+      <h3>El paseo del Gran Parque Central</h3>
+      <div class="row"><button class="btn" type="button" id="paseoPlay"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg><span>Recorrer el paseo</span></button></div>
+      <ol class="stops" id="stops"></ol>
+      <h3>La fachada de 1943</h3>
+      <p>El portal de ladrillo sobre Jaime Cibils se restaura. Las boleterías, con sus torretas estriadas, se adelantan unos 10 m hacia el límite del predio para que la fachada histórica quede continua. La reja original con la leyenda «Gran Parque Central» se graba en un muro de hormigón en el acceso de Urquiza.</p>
+      <div class="figs">
+        <button class="fig contain" type="button" data-img="portal-1943"><img src="img/portal-1943.jpg" alt="Plano histórico del portal de acceso" loading="lazy"></button>
+        <button class="fig contain" type="button" data-img="estrias-dibujo"><img src="img/estrias-dibujo.jpg" alt="Dibujo: estrías de la torre de boletería y de la nueva fachada" loading="lazy"></button>
+        <button class="fig" type="button" data-img="piel-fachada"><img src="img/piel-fachada.jpg" alt="Render: detalle de la piel de la fachada" loading="lazy"></button>
+      </div>
+      <p style="margin-top:12px;font-size:14.5px;color:var(--ink-2)">Las estrías de las torres de boletería reaparecen en la piel de la fachada nueva.</p>
+      <p class="src">Fuente: págs. 25, 27–29 y 91. El recorrido en el modelo es esquemático.</p>
+    </section>
+
+    <!-- LLEGADA -->
+    <section class="chapter" id="llegada" data-ch="llegada">
+      <p class="kicker">Llegada y accesos · págs. 23, 31–34, 47–54</p>
+      <h2>Cada uno por su puerta</h2>
+      <p class="lead">El acceso rodea el edificio en 360° y reparte a la gente. Elegí un grupo y mirá por dónde entra.</p>
+      <div class="acc" role="radiogroup" aria-label="Grupo de usuarios" id="accSeg"></div>
+      <div class="card acc-card" id="accCard" aria-live="polite"></div>
+      <ul class="facts">
+        <li><b>&lt; 1 km</b><span>hasta nodos de ómnibus locales, urbanos y metropolitanos</span></li>
+        <li><b>1,5 km</b><span>hasta el Estadio Centenario: el estacionamiento puede apoyar eventos allí</span></li>
+        <li><b>Zona de exclusión</b><span>se mantiene en días de partido; solo entran vehículos autorizados</span></li>
+      </ul>
+      <div class="figs two">
+        <button class="fig" type="button" data-img="fachada-urquiza"><img src="img/fachada-urquiza.jpg" alt="Render de la fachada con el zócalo comercial y los accesos" loading="lazy"></button>
+        <button class="fig" type="button" data-img="acceso-noche"><img src="img/acceso-noche.jpg" alt="Render nocturno de la llegada de hinchas" loading="lazy"></button>
+      </div>
+      <p class="src">Fuente: págs. 10, 23, 25, 31–34, 47–48 y 54.</p>
+    </section>
+
+    <!-- NÚMEROS -->
+    <section class="chapter" id="numeros" data-ch="numeros">
+      <p class="kicker">Unidades de negocio · pág. 42</p>
+      <h2>Lo que suma el proyecto</h2>
+      <p class="lead">El resumen del anteproyecto. Tocá un número para ubicarlo en el modelo.</p>
+      <div class="nums" id="nums"></div>
+      <p class="src">Fuente: pág. 42 (resumen de unidades de negocio).</p>
+    </section>
+
+    <!-- GALERÍA -->
+    <section class="chapter" id="galeria" data-ch="galeria">
+      <p class="kicker">Imágenes del anteproyecto</p>
+      <h2>Galería</h2>
+      <div class="gal" id="gal"></div>
+    </section>
+
+    <!-- EQUIPO -->
+    <section class="chapter" id="equipo" data-ch="equipo">
+      <p class="kicker">Equipo · pág. 119</p>
+      <h2>Quién lo proyectó</h2>
+      <div class="team">
+        <div><h4>Autores</h4><ul><li>Arq. Nicolás Guerra</li><li>Arq. Fernando De Rossa</li><li>Arq. Jimena Sellanes</li><li>Arq. José Ignacio Masena</li><li>Arq. Mariana Antía</li><li>Arq. Pablo Varesi</li></ul></div>
+        <div><h4>Colaboradores</h4><ul><li>Arq. Fernando Duarte</li><li>Arq. Claudia Curbelo</li><li>Arq. Gastón Hernández</li><li>Arq. Noel Álvarez</li><li>Arq. Elena Parrilla</li><li>Arq. Ricardo Izeta</li><li>Arq. Gabriela Álvarez</li></ul></div>
+        <div><h4>Imágenes y multimedia</h4><ul><li>Ricardo Izeta</li><li>Camilo Méndez</li></ul><h4 style="margin-top:14px">Diseño gráfico</h4><ul><li>Santiago Velazco</li></ul></div>
+        <div><h4>Estructura de la cubierta</h4><ul><li>SBP schlaich bergermann partner</li><li>Ing. Fernando Sima</li></ul><h4 style="margin-top:14px">Señalética</h4><ul><li>I+D · Nicolas Branca</li><li>I+D · Gonzalo Silva</li></ul></div>
+      </div>
+      <div class="disclaimer"><b>Guía no oficial.</b> Todo el contenido sale del documento «Concurso de ideas Plan Maestro Definitivo del Gran Parque Central» (anteproyecto, 121 páginas). Las imágenes son del anteproyecto. El modelo 3D es un esquema de volúmenes armado a partir de sus plantas (escala 1:1000) y cortes: sirve para entender la propuesta, no reemplaza los planos.</div>
+      <footer class="end">Las páginas citadas siguen la numeración impresa del anteproyecto.</footer>
+    </section>
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <div class="lb-img"><img id="lbImg" alt=""></div>
+  <div class="lb-foot">
+    <div><span id="lbCap"></span><small id="lbSrc"></small></div>
+    <div class="lb-btns">
+      <button type="button" id="lbPrev" aria-label="Imagen anterior">←</button>
+      <button type="button" id="lbNext" aria-label="Imagen siguiente">→</button>
+      <button type="button" id="lbClose" aria-label="Cerrar">✕</button>
+    </div>
+  </div>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+/* =========================================================
+   DATOS (todos tomados del anteproyecto)
+   ========================================================= */
+const IMGS = {
+  'aerial-complejo':{c:'La Plaza del Hincha, la terraza con canchas de tenis y el estadio.',p:18},
+  'aerial-barrio':{c:'El complejo en La Blanqueada.',p:94},
+  'skyline':{c:'El nuevo volumen en el horizonte de la ciudad.',p:16},
+  'hoy-aereo':{c:'El estadio hoy, en su manzana.',p:12},
+  'historia-tribuna':{c:'Imagen histórica del Parque.',p:9},
+  'historia-aereo':{c:'Vista aérea histórica.',p:11},
+  'bowl-hinchada':{c:'Gradas 360° bajo el techo continuo.',p:20},
+  'bowl-arco':{c:'La cancha vista desde el arco.',p:57},
+  'bowl-tribuna':{c:'El bowl completo, con el techo.',p:44},
+  'lounge':{c:'Lounge de hospitalidad frente a la cancha.',p:77},
+  'arena-basquet':{c:'La arena en modo básquetbol.',p:21},
+  'arena-escenario':{c:'La arena preparada para un espectáculo.',p:80},
+  'plaza-noche':{c:'La Plaza del Hincha de noche, con la arena.',p:22},
+  'plaza-dia':{c:'La plaza en un día sin partido.',p:86},
+  'plaza-escenario':{c:'Un escenario armado en la plaza.',p:110},
+  'fachada-urquiza':{c:'Fachada con el zócalo comercial y los accesos.',p:24},
+  'fachada-cibils':{c:'La fachada histórica bajo el nuevo volumen.',p:26},
+  'acceso-noche':{c:'Llegada en una noche de partido.',p:30},
+  'terraza':{c:'Terraza y acceso al estadio.',p:14},
+  'piel-fachada':{c:'Detalle de la piel de la fachada.',p:29},
+  'estrias-dibujo':{c:'Estrías de la torre de boletería histórica y de la nueva fachada.',p:28},
+  'portal-1943':{c:'Plano histórico del portal de acceso.',p:27}
+};
+const GALLERY = ['aerial-complejo','bowl-hinchada','arena-basquet','plaza-noche','fachada-cibils','skyline','bowl-tribuna','lounge','fachada-urquiza','acceso-noche','aerial-barrio','bowl-arco','plaza-dia','arena-escenario','terraza','plaza-escenario'];
+
+const TIMELINE = [
+  {y:'1900',t:'Inauguración',d:'Abrió el 25 de mayo con un palco cubierto de estilo chinesco y lugar para mil espectadores. Es el estadio más antiguo de América aún en funcionamiento.'},
+  {y:'1923',t:'Incendio y reconstrucción',d:'Un incendio arrasó las tribunas de madera el 5 de marzo; el 23 de septiembre se reinauguró ante Newell’s Old Boys. Ese año, todos los partidos de la Copa América se jugaron en el Parque.'},
+  {y:'1930',t:'Mundial',d:'Fue sede de partidos del Mundial de 1930.'},
+  {y:'1944',t:'Tribunas de cemento',d:'Después de otro incendio (1941) se levantaron las tribunas de cemento, entre ellas la José María Delgado con su doble bandeja.'},
+  {y:'1988',t:'Luz artificial',d:'El 1 de diciembre se encendieron por primera vez las luces: llegaron los partidos de noche.'},
+  {y:'2005',t:'Reinauguración',d:'Después de reformar cancha, vestuarios, servicios e iluminación (2003–2005), se reinauguró en marzo ante Olimpia.'},
+  {y:'2007',t:'Bandeja alta',d:'Se construyó la bandeja alta de la Atilio García. Entre 2006 y 2012 los taludes pasaron a ser tribunas y se sumaron palcos.'},
+  {y:'2013',t:'Mejoras y tecnología',d:'Entre 2013 y 2018: butacas en la Atilio García, un codo nuevo entre tribunas, pantalla gigante LED y más palcos en la Delgado.'},
+  {y:'2019',t:'Obras que suman',d:'Entre 2019 y 2021 se agregaron pisos de palcos, revestimientos y mobiliario en la tribuna Delgado.'},
+  {y:'2023',t:'Mirada a futuro',d:'Entre 2023 y 2025: estacionamiento para más de 200 autos bajo la Atilio García y baños nuevos en la Abdón Porte.'},
+  {y:'2025',t:'Plan maestro',d:'Junio de 2025: «transformar sin olvidar, crecer sin perder el alma».'}
+];
+
+const CONCEPT = [
+  null,
+  {t:'Hoy',d:'Un estadio incrustado en la manzana, con cuatro tribunas independientes y un solo codo, entre la Abdón Porte y la Atilio García.',chips:['48.000 m² de terreno','≈ 34.000 espectadores']},
+  {t:'Volumen capaz',d:'Lo que la normativa permite construir sobre el terreno: una oportunidad en una de las zonas más valorizadas de la ciudad.',chips:['≈ 150.000 m² edificables','FOS 80 %','Altura 16,5 m']},
+  {t:'Supermanzana de 15 m',d:'Un volumen que reconstruye la manzana y dialoga con la escala del barrio. Dentro se ahuecan tres recintos: estadio, arena y plaza.',chips:['Plinto +3,50 / +7,00','Terraza +14,90']},
+  {t:'Cierre del bowl',d:'El estadio se cierra en 360° hasta la cota 15: tribuna baja continua, sin cortes ni vacíos, y nuevas tribunas en las esquinas.',chips:['360° hasta +15 m','Sin usar terrenos nuevos']},
+  {t:'Techo y envolvente',d:'Un volumen elevado en forma de cruz resuelve techo y fachadas. En las esquinas quedan suspendidos los lounges de hospitalidad.',chips:['Techo sobre todas las butacas','Esquinas suspendidas']},
+  {t:'Futuros crecimientos',d:'Todo funciona sobre suelo que ya es del club. Si se compran padrones linderos, el edificio puede extenderse hasta el borde de la manzana sin perder su unidad.',chips:['Jaime Cibils y Urquiza','Jaime Cibils y Anaya','Anaya, detrás de la Delgado','Urquiza y Braga']}
+];
+
+const RECINTOS = {
+  todos:{t:'Los tres a la vez',rows:[['Recital','en la arena'],['Feria gastronómica','en la plaza'],['Entrenamiento a puertas abiertas','en el estadio']],src:'pág. 42'},
+  estadio:{t:'Estadio',rows:[['44.000','personas de capacidad'],['16.544','butacas nuevas'],['1.869','butacas en lounges de hospitalidad']],src:'pág. 42'},
+  arena:{t:'Arena polideportiva',rows:[['4.730','personas'],['1.940 m²','de arena multievento'],['352','butacas de hospitalidad']],src:'pág. 42'},
+  plaza:{t:'Plaza del Hincha',rows:[['3.969 m²','de recinto multiuso abierto'],['40 × 15 m','de muro multimedia'],['Fan zone','gastronomía, tiendas y sombra']],src:'págs. 32, 42 y 88'}
+};
+
+const ETAPAS = [
+  {t:'El estadio hoy',lv:'Punto de partida',ob:['Cuatro tribunas independientes, construidas en épocas distintas','Un solo codo, entre la Abdón Porte y la Atilio García'],ud:[]},
+  {t:'Estacionamiento',lv:'Nivel −2',ob:['Estacionamiento en el nivel −2','Mudanza del estacionamiento existente','Reubicación de las canchas de tenis'],ud:['430 plazas de estacionamiento (ampliable con valet parking)']},
+  {t:'Zócalo sobre Urquiza',lv:'Niveles 0, 1 y 2',ob:['Zócalo bajo la tribuna Atilio García, con frente a Urquiza','Bajo tribuna Abdón Porte','Mejora de accesos a la Atilio García y la Abdón Porte'],ud:['3.100 m² para museos','1.852 m² de locales comerciales (ampliable al doble con entrepisos)','1.228 m² de tienda ancla con área de carga','250 m² de cocina','917 m² de soporte para eventos']},
+  {t:'Cancha más baja y codos',lv:'Niveles 0 y 1',ob:['La cancha baja 75 cm','Re-perfilado de las primeras 18 filas de la Atilio García','12 filas más en el codo Atilio García–Abdón Porte','3 filas más en la Abdón Porte','Nuevo codo Atilio García–Héctor Scarone','Doble placa de publicidad'],ud:['524 ml de placa de publicidad','1.325 butacas nuevas','3.567 butacas con mejor visibilidad'],nota:'Las etapas 3 y 4 se hacen en simultáneo y son las únicas que interrumpen el uso del estadio.'},
+  {t:'Bajo tribuna Delgado',lv:'Niveles 0, 1 y 2',ob:['Reforma bajo la Delgado: acceso de delegaciones, vestuarios y accesos a la tribuna principal','Mejora de servicios para competiciones y de accesos a la Delgado','Codos del primer anillo: Delgado–Abdón Porte y Delgado–Scarone'],ud:['768 butacas nuevas','500 m² de salón de eventos VIP / VVIP'],nota:'Las etapas 3 y 4 se hacen en simultáneo y son las únicas que interrumpen el uso del estadio.'},
+  {t:'Scarone y fachada histórica',lv:'Niveles 0, 1 y 2',ob:['Bajo tribuna Scarone','Restauración de la fachada patrimonial','Pequeña ampliación de la tribuna Héctor Scarone'],ud:['728 butacas nuevas']},
+  {t:'Codos altos y sede',lv:'Niveles 3 y 4',ob:['Más filas en el codo Atilio García–Abdón Porte','Tribuna y lounge de hospitalidad entre la Atilio García y la Scarone','Ampliación en nivel 3 para sede y áreas rentables','Leve ampliación de la Abdón Porte'],ud:['1.101 butacas nuevas','159 butacas y 239 m² de lounge de hospitalidad','180 m² de ampliación del paddock','1.494 m² para sede o superficie rentable']},
+  {t:'Segundo anillo',lv:'Niveles 3 y 4',ob:['Codos del segundo anillo: Delgado–Abdón Porte y Delgado–Scarone','Superficies rentables en nivel 3 detrás de la Delgado','Reforma de circulaciones y servicios de hospitalidad, VIP y VVIP'],ud:['2.310 butacas nuevas','805 m² de superficie rentable']},
+  {t:'Arena polideportiva',lv:'Niveles −1 a 3',ob:['Construcción de la arena y sus servicios','Nuevas áreas de prensa'],ud:['Arena de 1.940 m² para 4.730 personas','281 butacas en tribuna y 71 en lounge de hospitalidad','247 m² de lounge','96 m² de pantalla en el scoreboard','225 m² de gastronomía','Auditorio e-sports de 329 m²']},
+  {t:'Plaza del Hincha',lv:'Niveles −1 y 0',ob:['Estacionamiento en los niveles −1 y 0','Construcción de la Plaza del Hincha'],ud:['550 plazas de estacionamiento (ampliable con valet parking)','3.969 m² de espacio abierto multievento']},
+  {t:'Terraza y áreas rentables',lv:'Niveles 2, 3 y 4',ob:['Niveles 2, 3 y 4 en torno a la Plaza del Hincha'],ud:['11.138 m² de áreas disponibles rentables','9.659 m² de terraza multiuso: canchas, pista y más']},
+  {t:'Bandeja alta Scarone',lv:'Tribuna Héctor Scarone',ob:['Construcción de la bandeja alta de la Héctor Scarone'],ud:['2.015 butacas nuevas']},
+  {t:'Techo, primera etapa',lv:'Delgado y Atilio García',ob:['Techo sobre la Delgado y la Atilio García','Pantallas','Cinta multimedia'],ud:['199 m² de pantalla','346 ml de cinta multimedia']},
+  {t:'Techo, segunda etapa',lv:'Abdón Porte y Scarone',ob:['Techo sobre la Abdón Porte y la Scarone','Reubicación de palcos de hospitalidad con mala visibilidad'],ud:['600 m² de muro multimedia']},
+  {t:'Lounges en las esquinas',lv:'Esquinas del bowl',ob:['Tribunas y lounges de hospitalidad elevados en las esquinas, con muy buena visibilidad'],ud:['1.358 butacas en lounge de hospitalidad','4.053 m² de lounge de hospitalidad']},
+  {t:'Proyecto completo',lv:'Nuevo Gran Parque Central',ob:['Estadio cerrado en 360°, techado, con arena, plaza, terraza, museos y estacionamiento'],ud:[]}
+];
+
+const CAP = [
+  {id:'hoy',t:'Hoy',general:22969,hosp:5553,vip:907,vvip:0,prensa:173,neta:28522,publico:29603,bruta:34521},
+  {id:'auf',t:'AUF',general:33820,hosp:8009,vip:1835,vvip:87,prensa:172,neta:41829,publico:43923,bruta:43923},
+  {id:'conmebol',t:'CONMEBOL',general:33820,hosp:7880,vip:1110,vvip:967,prensa:172,neta:41700,publico:43949,bruta:43949},
+  {id:'fifa',t:'FIFA',general:33820,hosp:6361,vip:788,vvip:85,prensa:1297,neta:40181,publico:42351,bruta:42351}
+];
+const CAP_ROWS = [['general','Público general'],['hosp','Hospitalidad'],['vip','VIP'],['vvip','VVIP'],['prensa','Prensa y TV']];
+
+const SCORE = [
+  ['Campo de juego',12.5,3.85,4.16],['Césped',15,4.50,5.00],['Iluminación deportiva',7.5,4.45,5.00],['Competiciones',12.5,3.28,4.89],
+  ['Espectadores',12.5,2.45,4.30],['Seguridad',10,2.15,4.20],['Prensa',15,3.01,4.09],['Accesos',7.5,2.50,4.20],['Instalaciones',7.5,2.70,4.35]
+];
+const SCORE_TOTAL = [3.26,4.47];
+
+const SCEN = [
+  {t:'Hoy',s:'+1,40 m',y:1.40},{t:'−50 cm',s:'+0,90 m',y:0.90},{t:'−75 cm',s:'+0,65 m',y:0.65},
+  {t:'−100 cm',s:'+0,40 m',y:0.40},{t:'−150 cm',s:'−0,10 m',y:-0.10},{t:'Propuesta',s:'−75 cm',y:0.65,prop:true}
+];
+const VIS = [
+  {k:'jmdT',n:'Delgado · tribuna',s:['media','ok','ok','ok','ok','ok'],no:['Obstruida en las primeras 6 filas, por el banco de suplentes','','','','','']},
+  {k:'jmdN2',n:'Delgado · palcos N2',s:['ok','ok','ok','ok','mala','ok'],no:['','Suplementar 2 cm la grada interna','Suplementar 3 cm la grada interna','Suplementar 4 cm la grada interna','Suplementar 6 cm la grada interna','Suplementar 4 cm la grada interna']},
+  {k:'jmdAl',n:'Delgado · palcos N4 a N9',s:['ok','ok','ok','ok','mediamala','ok'],no:['N4 a N6: suplementar 2 cm','N4 a N9: suplementar 2 cm','N4 a N9: suplementar 2 cm','N4 a N6: 2 cm · N7 a N9: 3 cm','N4 a N6: 2 cm · N7 a N9: 5 cm','N4 a N6: 2 cm · N7 a N9: 3 cm']},
+  {k:'agT',n:'Atilio García · tribuna',s:['mala','muymala','muymala','muymala','muymala','ok'],no:['Obstruida en las primeras 17 filas','Obstruida en las primeras 24 filas','Obstruida en las primeras 30 filas','Obstruida en las primeras 43 filas','Obstruida en todas las filas','Re-perfilar las primeras 18 filas']},
+  {k:'agP',n:'Atilio García · palcos',s:['ok','ok','ok','ok','ok','ok'],no:['','','','','','']},
+  {k:'apB',n:'Abdón Porte · baja',s:['ok','ok','ok','mala','mala','ok'],no:['','','','Obstruida en las filas 22 a 34','Obstruida en las filas 14 a 34','']},
+  {k:'apA',n:'Abdón Porte · alta',s:['ok','ok','ok','mala','mala','ok'],no:['','','','Obstruida en todas las filas','Obstruida en todas las filas','']},
+  {k:'hsB',n:'Scarone · baja',s:['media','media','ok','ok','ok','ok'],no:['Obstruida en las primeras 6 filas, por las placas de publicidad','Obstruida en las primeras 6 filas, por las placas de publicidad','','','','']},
+  {k:'hsA',n:'Scarone · alta',s:['none','none','none','none','none','ok'],no:['','','','','','']}
+];
+const STATUS = {
+  ok:{l:'OK',g:'✓',c:'var(--good)',ink:'#0E1A2F'},
+  media:{l:'Media',g:'!',c:'var(--warn)',ink:'#0E1A2F'},
+  mediamala:{l:'Media / mala',g:'!',c:'var(--serious)',ink:'#0E1A2F'},
+  mala:{l:'Mala',g:'✕',c:'var(--serious)',ink:'#0E1A2F'},
+  muymala:{l:'Muy mala',g:'✕✕',c:'var(--critical)',ink:'#FFFFFF'},
+  none:{l:'No existe',g:'–',c:'transparent',ink:'var(--muted)'}
+};
+
+const ARENA = [
+  {id:'basket',t:'Básquetbol',publico:4729,neta:4573},
+  {id:'futsal',t:'Futsal',publico:4448,neta:4155},
+  {id:'handbol',t:'Handbol',publico:4448,neta:4155},
+  {id:'voley',t:'Vóleibol',publico:4606,neta:4313},
+  {id:'show',t:'Espectáculo',publico:5684,neta:5446}
+];
+const PLAZA = [
+  {id:'plaza',t:'Plaza',d:'Punto de encuentro con gastronomía, tiendas oficiales, información y zonas de sombra, gestionado por el club.'},
+  {id:'feria',t:'Feria',d:'Recinto ferial: ferias temáticas y gastronómicas.'},
+  {id:'cine',t:'Cine',d:'Cine a cielo abierto frente al muro multimedia.'},
+  {id:'concierto',t:'Concierto',d:'Escenario para conciertos y presentaciones.'},
+  {id:'deporte',t:'Deporte',d:'Canchas al aire libre: la plaza como polideportivo abierto.'}
+];
+const STOPS = [
+  {t:'Fachada histórica',s:'Jaime Cibils: el comienzo del paseo'},
+  {t:'Vestuario del primer equipo',s:'Bajo la tribuna Delgado'},
+  {t:'Túnel',s:'La pasarela entre la intimidad y el clamor'},
+  {t:'Bancos de suplentes',s:'Frente a la Delgado'},
+  {t:'El césped',s:'Pisar la cancha'},
+  {t:'Lounge VIP',s:'Asomado a la tribuna Delgado'},
+  {t:'Asiento de Carlos Gardel',s:'Al final del recorrido, desde el lounge VIP'}
+];
+const ACCESOS = [
+  {id:'locales',t:'Hinchas locales',d:'Desde la Plaza del Hincha a la Abdón Porte y la Atilio García. A la Héctor Scarone se entra por la fachada histórica de Jaime Cibils.',src:'pág. 47'},
+  {id:'visitantes',t:'Hinchada visitante',d:'Por Juan Ramón Gómez, en un área vallada y operativamente flexible, con recorridos separados hasta su ubicación.',src:'pág. 47'},
+  {id:'hosp',t:'Hospitalidad',d:'Ingresos dedicados desde Anaya y Urquiza, por vestíbulos propios.',src:'pág. 47'},
+  {id:'vip',t:'VIP y VVIP',d:'Por Azambuya, a un vestíbulo renovado en el nivel 0 de la tribuna principal.',src:'pág. 47'},
+  {id:'local',t:'Equipo local y árbitros',d:'Por Anaya. Los ómnibus entran al estadio y los jugadores bajan bajo techo.',src:'pág. 48'},
+  {id:'visita',t:'Equipo visitante',d:'Por Jaime Cibils.',src:'pág. 48'},
+  {id:'prensa',t:'Prensa',d:'Desde el estacionamiento, con acreditación vehicular, o por un acceso propio en la Plaza del Hincha.',src:'pág. 54'},
+  {id:'autos',t:'Autos',d:'Estacionamiento con ingresos desde Urquiza, Braga y Anaya. Solo entran vehículos autorizados en días de partido.',src:'págs. 25 y 31'},
+  {id:'tv',t:'Camiones de TV',d:'El recinto de retransmisiones exteriores tiene acceso por Anaya, conectado a estadio y arena.',src:'pág. 54'}
+];
+const NUMS = [
+  {v:'16.544',l:'butacas nuevas en el estadio',hl:'asientos'},
+  {v:'44.000',l:'personas de capacidad',hl:'asientos'},
+  {v:'980',l:'lugares de estacionamiento',hl:'park'},
+  {v:'3.100 m²',l:'de museos',hl:'museos'},
+  {v:'14.266 m²',l:'de superficies rentables',hl:'rentable'},
+  {v:'3.080 m²',l:'de locales comerciales',hl:'locales'},
+  {v:'1.869',l:'butacas en lounges de hospitalidad',hl:'lounges'},
+  {v:'4.719 m²',l:'de lounges de hospitalidad',hl:'lounges'},
+  {v:'3.969 m²',l:'de Plaza del Hincha',hl:'plaza'},
+  {v:'4.730',l:'personas en la arena de 1.940 m²',hl:'arena'},
+  {v:'9.659 m²',l:'de terraza multiuso',hl:'terraza'},
+  {v:'1.766 m²',l:'de posibles pantallas multimedia',hl:'pantallas'},
+  {v:'450 m²',l:'de gastronomía bajo las tribunas'},
+  {v:'225 m²',l:'de gastronomía en la arena'},
+  {v:'250 m²',l:'de cocina'},
+  {v:'917 m²',l:'de área de soporte para eventos'}
+];
+
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>Array.from(el.querySelectorAll(s));
+const fmt = n => n.toLocaleString('es-UY');
+const fmt2 = n => n.toLocaleString('es-UY',{minimumFractionDigits:2,maximumFractionDigits:2});
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function el(tag, attrs, ...kids){ const e=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==='text') e.textContent=attrs[k]; else if(k==='class') e.className=attrs[k]; else e.setAttribute(k,attrs[k]); } kids.forEach(k=>{ if(k==null) return; e.append(k.nodeType? k : document.createTextNode(k)); }); return e; }
+function radioGroup(container, onPick){
+  container.addEventListener('click', e=>{ const b=e.target.closest('[role="radio"]'); if(!b||!container.contains(b)) return; setChecked(container,b); onPick(b); });
+  container.addEventListener('keydown', e=>{ if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp'].includes(e.key)) return; const bs=$$('[role="radio"]',container); let i=bs.indexOf(document.activeElement); if(i<0) return; e.preventDefault(); i=(i+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+bs.length)%bs.length; bs[i].focus(); setChecked(container,bs[i]); onPick(bs[i]); });
+}
+function setChecked(container,b){ $$('[role="radio"]',container).forEach(x=>{ const on=x===b; x.setAttribute('aria-checked',on); x.tabIndex=on?0:-1; }); }
+const tip = $('#tip');
+function showTip(html, x, y){ tip.innerHTML=''; html.forEach(n=>tip.append(n)); tip.style.opacity=1; const r=tip.getBoundingClientRect(); let tx=x+14, ty=y+14; if(tx+r.width>innerWidth-8) tx=x-r.width-14; if(ty+r.height>innerHeight-8) ty=y-r.height-14; tip.style.left=tx+'px'; tip.style.top=ty+'px'; }
+function hideTip(){ tip.style.opacity=0; }
+
+/* =========================================================
+   UI: CONTENIDO
+   ========================================================= */
+// Timeline
+(function(){
+  const years=$('#tlYears'), card=$('#tlCard');
+  TIMELINE.forEach((it,i)=>{ const b=el('button',{type:'button',role:'tab','aria-selected':i===0,id:'tl'+i,'aria-controls':'tlCard',text:it.y}); b.tabIndex=i===0?0:-1; years.append(b); });
+  function show(i){ const it=TIMELINE[i]; $$('button',years).forEach((b,j)=>{ b.setAttribute('aria-selected',j===i); b.tabIndex=j===i?0:-1; }); card.replaceChildren(el('div',{class:'y',text:it.y}),el('div',{class:'t',text:it.t}),el('p',{text:it.d})); card.setAttribute('aria-labelledby','tl'+i); }
+  years.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; show($$('button',years).indexOf(b)); });
+  years.addEventListener('keydown',e=>{ const bs=$$('button',years); let i=bs.findIndex(b=>b.getAttribute('aria-selected')==='true'); if(e.key==='ArrowRight'){i=Math.min(bs.length-1,i+1);} else if(e.key==='ArrowLeft'){i=Math.max(0,i-1);} else return; e.preventDefault(); show(i); bs[i].focus(); });
+  show(0);
+})();
+
+// Concept card
+function renderConcept(c){ const d=CONCEPT[c]; const card=$('#conceptCard'); card.replaceChildren(el('div',{style:'font:800 26px/1 var(--f-display);text-transform:uppercase;margin-bottom:8px',text:c+' · '+d.t}), el('p',{style:'font-size:15px;color:var(--ink-2);margin:0',text:d.d}), (()=>{ const u=el('ul',{class:'chips red'}); d.chips.forEach(x=>u.append(el('li',{text:x}))); return u; })()); }
+renderConcept(1);
+
+// Recintos card
+function renderRec(k){ const d=RECINTOS[k]; const card=$('#recCard'); const ul=el('ul',{class:'facts',style:'margin-top:4px'}); d.rows.forEach(r=>ul.append(el('li',{},el('b',{text:r[0]}),el('span',{text:r[1]})))); card.replaceChildren(el('div',{style:'font:800 24px/1 var(--f-display);text-transform:uppercase;margin-bottom:6px',text:d.t}), ul, el('div',{class:'src',style:'margin-top:8px',text:'Fuente: '+d.src})); }
+renderRec('todos');
+
+// Etapas UI
+(function(){
+  const ticks=$('#etTicks');
+  for(let i=0;i<=15;i++){ const b=el('button',{type:'button','data-s':i,'aria-label':i===0?'Hoy':i===15?'Proyecto completo':'Etapa '+i,text:i===0?'Hoy':i===15?'Fin':String(i)}); if(i===0||i===15) b.classList.add('all'); ticks.append(b); }
+})();
+
+// Capacidad chart
+(function(){
+  const seg=$('#capSeg');
+  CAP.forEach((m,i)=>{ const b=el('button',{type:'button',role:'radio','aria-checked':i===1,'data-m':i,text:i===0?'Hoy':'Modo '+m.t}); b.tabIndex=i===1?0:-1; seg.append(b); });
+  const box=$('#capChart'); const MAX=34000;
+  const head=el('div',{class:'cap-head'}); const big=el('div',{class:'big'}); const sub=el('div',{class:'sub'}); head.append(big,sub);
+  const bars=el('div',{class:'bars',role:'img'}); const rows={};
+  CAP_ROWS.forEach(([k,l])=>{ const lab=el('div',{class:'bl',text:l}); const t=el('div',{class:'bt'}); const i=el('i'); const em=el('em'); t.append(i,em); bars.append(lab,t); rows[k]={i,em,t,l}; });
+  const note=el('div',{class:'axis-note',text:'Escala común de 0 a 34.000 para comparar modos.'});
+  const det=el('details',{class:'tbl'}); det.append(el('summary',{text:'Ver tabla completa'}));
+  const tw=el('div',{class:'tscroll'}); const tb=el('table'); const thead=el('thead'); const hr=el('tr'); hr.append(el('th',{text:'Categoría'})); CAP.forEach(m=>hr.append(el('th',{text:m.t}))); thead.append(hr); tb.append(thead);
+  const tbody=el('tbody'); [...CAP_ROWS,['neta','Capacidad neta'],['publico','Total público'],['bruta','Capacidad bruta']].forEach(([k,l])=>{ const tr=el('tr'); tr.append(el('td',{text:l})); CAP.forEach(m=>tr.append(el('td',{text:fmt(m[k])}))); tbody.append(tr); }); tb.append(tbody); tw.append(tb); det.append(tw);
+  box.append(head,bars,note,det,el('div',{class:'src',text:'Fuente: pág. 64 (aforo neto vs. bruto).'}));
+  let cur=1;
+  function draw(i){ cur=i; const m=CAP[i]; big.textContent=fmt(m.publico); sub.replaceChildren('total público · neta '+fmt(m.neta)+' · bruta '+fmt(m.bruta)+(i>0?' · hoy '+fmt(CAP[0].publico):'')); bars.setAttribute('aria-label','Capacidad '+(i===0?'actual':'en modo '+m.t)+': '+CAP_ROWS.map(([k,l])=>l+' '+fmt(m[k])).join(', '));
+    CAP_ROWS.forEach(([k])=>{ const r=rows[k]; const pct=Math.max(0,m[k]/MAX*100); r.i.style.width=pct+'%'; r.em.style.left=pct+'%'; r.em.textContent=fmt(m[k]); }); }
+  CAP_ROWS.forEach(([k])=>{ const r=rows[k]; const h=e=>{ const m=CAP[cur]; showTip([el('b',{text:fmt(m[k])}),el('span',{text:r.l+' · '+(cur===0?'hoy':'modo '+m.t)})], e.clientX, e.clientY); }; r.t.addEventListener('pointermove',h); r.t.addEventListener('pointerleave',hideTip); });
+  radioGroup(seg,b=>draw(+b.dataset.m));
+  draw(1);
+})();
+
+// Visibilidad
+const Vis = (function(){
+  const seg=$('#scenSeg');
+  SCEN.forEach((s,i)=>{ const b=el('button',{type:'button',role:'radio','aria-checked':i===5,'data-i':i,class:s.prop?'prop':''},el('b',{text:s.t}),el('small',{text:s.s})); b.tabIndex=i===5?0:-1; seg.append(b); });
+  const card=$('#visCard'); const NS='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(NS,'svg'); svg.setAttribute('viewBox','0 0 320 236'); svg.setAttribute('class','viz'); svg.setAttribute('role','img');
+  const mk=(t,a)=>{ const n=document.createElementNS(NS,t); for(const k in a) n.setAttribute(k,a[k]); return n; };
+  // pitch
+  svg.append(mk('rect',{x:84,y:70,width:152,height:98,rx:2,fill:'#5d9d57'}));
+  svg.append(mk('rect',{x:88,y:74,width:144,height:90,fill:'none',stroke:'#fff','stroke-width':1.2,opacity:.85}));
+  svg.append(mk('line',{x1:160,y1:74,x2:160,y2:164,stroke:'#fff','stroke-width':1.2,opacity:.85}));
+  svg.append(mk('circle',{cx:160,cy:119,r:12,fill:'none',stroke:'#fff','stroke-width':1.2,opacity:.85}));
+  const SECT={ jmdAl:[84,10,152,20], jmdN2:[84,33,152,14], jmdT:[84,50,152,17], agT:[84,171,152,18], agP:[84,192,152,14], apB:[64,70,17,98], apA:[42,70,19,98], hsB:[239,70,17,98], hsA:[259,70,19,98] };
+  const nodes={};
+  VIS.forEach(v=>{ const [x,y,w,h]=SECT[v.k]; const g=mk('g',{tabindex:0,role:'button','aria-label':v.n}); const r=mk('rect',{x,y,width:w,height:h,rx:3}); const t=mk('text',{x:x+w/2,y:y+h/2+4,'text-anchor':'middle','font-size':10,'font-weight':700}); g.append(r,t); svg.append(g); nodes[v.k]={g,r,t,v};
+    const hv=e=>{ const st=STATUS[v.s[cur]]; const note=v.no[cur]; const box=[el('b',{text:st.l}),el('span',{text:v.n})]; if(note) box.push(el('div',{style:'margin-top:4px;color:var(--ink-2)',text:note})); const bb=e.clientX? {x:e.clientX,y:e.clientY} : (()=>{const rr=g.getBoundingClientRect(); return {x:rr.right,y:rr.top};})(); showTip(box,bb.x,bb.y); };
+    g.addEventListener('pointermove',hv); g.addEventListener('pointerleave',hideTip); g.addEventListener('focus',hv); g.addEventListener('blur',hideTip); });
+  const lab=(x,y,txt,rot)=>{ const t=mk('text',{x,y,'text-anchor':'middle','font-size':9.5,'font-weight':600,fill:'currentColor','letter-spacing':'.08em'}); if(rot) t.setAttribute('transform',`rotate(${rot} ${x} ${y})`); t.textContent=txt; svg.append(t); };
+  lab(160,7,'JOSÉ MARÍA DELGADO'); lab(160,218,'ATILIO GARCÍA'); lab(33,119,'ABDÓN PORTE',-90); lab(288,119,'HÉCTOR SCARONE',90);
+  svg.style.color='var(--ink-2)';
+  const legend=el('div',{class:'vis-legend'}); ['ok','media','mala','muymala'].forEach(k=>{ const s=STATUS[k]; const i=el('i',{text:s.g}); i.style.background=s.c; i.style.color=s.ink; legend.append(el('span',{},i,s.l)); });
+  const notes=el('ul',{class:'vis-notes'});
+  card.append(svg,legend,notes);
+  let cur=5;
+  function draw(i){ cur=i; VIS.forEach(v=>{ const n=nodes[v.k]; const st=STATUS[v.s[i]]; n.r.setAttribute('fill',st.c); n.r.setAttribute('stroke', v.s[i]==='none'?'var(--line-2)':'var(--surface)'); n.r.setAttribute('stroke-width', v.s[i]==='none'?1:1.5); if(v.s[i]==='none') n.r.setAttribute('stroke-dasharray','3 3'); else n.r.removeAttribute('stroke-dasharray'); n.t.textContent=st.g; n.t.setAttribute('fill',st.ink); });
+    svg.setAttribute('aria-label','Visibilidad por sector en el escenario '+SCEN[i].t+': '+VIS.map(v=>v.n+' '+STATUS[v.s[i]].l).join('; '));
+    notes.replaceChildren(); VIS.forEach(v=>{ if(v.no[i]) notes.append(el('li',{},el('b',{text:v.n+':'}),v.no[i])); });
+    if(i===5) notes.append(el('li',{},el('b',{text:'Recupera 4.918 asientos:'}),'919 en la Delgado, 3.191 en la Atilio García y 809 en la Scarone.'));
+    if(!notes.children.length) notes.append(el('li',{text:'Sin observaciones en este escenario.'}));
+  }
+  radioGroup(seg,b=>{ draw(+b.dataset.i); App.onScenario(+b.dataset.i); });
+  draw(5);
+  return {get cur(){return cur}};
+})();
+
+// Puntaje (dumbbell)
+(function(){
+  const box=$('#scoreChart'); const NS='http://www.w3.org/2000/svg';
+  const W=600, L=158, R=578, top=34, rowH=27, rows=SCORE.length+1, H=top+rows*rowH+28;
+  const X=v=>L+(v-1)/4*(R-L);
+  const svg=document.createElementNS(NS,'svg'); svg.setAttribute('viewBox',`0 0 ${W} ${H}`); svg.setAttribute('class','viz'); svg.setAttribute('role','img');
+  svg.setAttribute('aria-label','Puntaje por área, actual y propuesta. Nota general: '+fmt2(SCORE_TOTAL[0])+' hoy, '+fmt2(SCORE_TOTAL[1])+' con la propuesta.');
+  const mk=(t,a)=>{ const n=document.createElementNS(NS,t); for(const k in a) n.setAttribute(k,a[k]); return n; };
+  for(let v=1;v<=5;v++){ svg.append(mk('line',{x1:X(v),x2:X(v),y1:top-8,y2:top+rows*rowH-6,stroke:'var(--grid)','stroke-width':1})); const t=mk('text',{x:X(v),y:H-8,'text-anchor':'middle','font-size':11,fill:'var(--muted)'}); t.textContent=v; svg.append(t); }
+  // umbral
+  svg.append(mk('line',{x1:X(4.25),x2:X(4.25),y1:top-14,y2:top+rows*rowH-6,stroke:'var(--red)','stroke-width':1.2}));
+  const th=mk('text',{x:X(4.25),y:top-18,'text-anchor':'middle','font-size':10.5,fill:'var(--ink-2)','font-weight':600}); th.textContent='4,25 · 85 %'; svg.append(th);
+  const all=[...SCORE.map(s=>({n:s[0],w:s[1],a:s[2],p:s[3]})),{n:'Nota general',w:100,a:SCORE_TOTAL[0],p:SCORE_TOTAL[1],total:true}];
+  all.forEach((s,i)=>{ const y=top+i*rowH+(s.total?8:0);
+    if(s.total) svg.append(mk('line',{x1:8,x2:R,y1:y-15,y2:y-15,stroke:'var(--line)','stroke-width':1}));
+    const t=mk('text',{x:8,y:y+4,'font-size':12.5,fill:s.total?'var(--ink)':'var(--ink-2)','font-weight':s.total?700:400}); t.textContent=s.n; svg.append(t);
+    svg.append(mk('line',{x1:X(s.a),x2:X(s.p),y1:y,y2:y,stroke:'var(--series-2)','stroke-width':2,'stroke-linecap':'round',opacity:.7}));
+    svg.append(mk('circle',{cx:X(s.a),cy:y,r:5,fill:'var(--series-2)',stroke:'var(--surface)','stroke-width':2}));
+    svg.append(mk('circle',{cx:X(s.p),cy:y,r:s.total?6.5:5.5,fill:'var(--series)',stroke:'var(--surface)','stroke-width':2}));
+    if(s.total){ const a=mk('text',{x:X(s.a)-10,y:y+4,'text-anchor':'end','font-size':12.5,'font-weight':600,fill:'var(--ink)'}); a.textContent=fmt2(s.a); svg.append(a); const p=mk('text',{x:X(s.p)+10,y:y+4,'font-size':12.5,'font-weight':700,fill:'var(--ink)'}); p.textContent=fmt2(s.p); svg.append(p); }
+    const hit=mk('rect',{x:0,y:y-rowH/2,width:W,height:rowH,fill:'transparent',tabindex:0}); hit.setAttribute('aria-label',s.n+': hoy '+fmt2(s.a)+', propuesta '+fmt2(s.p));
+    const hv=e=>{ const r=hit.getBoundingClientRect(); const x=e.clientX||r.left+r.width*0.6, yy=e.clientY||r.top; const k1=el('span',{class:'k'}); k1.style.background='var(--series)'; const k2=el('span',{class:'k'}); k2.style.background='var(--series-2)'; showTip([el('b',{text:fmt2(s.p)}),el('div',{},k1,'Propuesta'),el('div',{style:'margin-top:4px'},el('b',{style:'display:inline;font-size:13px',text:fmt2(s.a)}),' ',k2,'Actual'),el('div',{style:'margin-top:4px;color:var(--muted)',text:s.n+(s.total?'':' · peso '+String(s.w).replace('.',',')+' %')})], x, yy); };
+    hit.addEventListener('pointermove',hv); hit.addEventListener('pointerleave',hideTip); hit.addEventListener('focus',hv); hit.addEventListener('blur',hideTip); svg.append(hit);
+  });
+  const lg=el('div',{class:'legend'}); const d1=el('span',{class:'dot'}); d1.style.background='var(--series-2)'; const d2=el('span',{class:'dot'}); d2.style.background='var(--series)'; const d3=el('span',{style:'display:inline-block;width:2px;height:12px;background:var(--red)'});
+  lg.append(el('span',{},d1,'Actual'),el('span',{},d2,'Propuesta'),el('span',{},d3,'Umbral para competencias oficiales'));
+  const det=el('details',{class:'tbl'}); det.append(el('summary',{text:'Ver tabla'})); const tw=el('div',{class:'tscroll'}); const tb=el('table'); tb.innerHTML='<thead><tr><th>Área</th><th>Peso</th><th>Actual</th><th>Propuesta</th></tr></thead>'; const tbody=el('tbody'); all.forEach(s=>{ const tr=el('tr'); tr.append(el('td',{text:s.n}),el('td',{text:s.total?'100 %':String(s.w).replace('.',',')+' %'}),el('td',{text:fmt2(s.a)}),el('td',{text:fmt2(s.p)})); tbody.append(tr); }); tb.append(tbody); tw.append(tb); det.append(tw);
+  box.append(lg,svg,det,el('div',{class:'src',text:'Fuente: págs. 78–79.'}));
+})();
+
+// Arena
+(function(){
+  const seg=$('#arenaSeg'); ARENA.forEach((a,i)=>{ const b=el('button',{type:'button',role:'radio','aria-checked':i===0,'data-a':a.id,text:a.t}); b.tabIndex=i===0?0:-1; seg.append(b); });
+  const card=$('#arenaCard');
+  function draw(id){ const a=ARENA.find(x=>x.id===id); card.replaceChildren(el('div',{class:'cap-head',style:'margin:0'},el('div',{class:'big',text:fmt(a.publico)}),el('div',{class:'sub',text:'personas en modo '+a.t.toLowerCase()+' · neta '+fmt(a.neta)})), el('div',{class:'src',style:'margin-top:8px',text:a.id==='basket'?'En básquetbol se suman sillas a nivel de cancha. Fuente: págs. 82–83.':'Fuente: pág. 83.'})); }
+  radioGroup(seg,b=>{ draw(b.dataset.a); App.set({arenaMode:b.dataset.a}); });
+  draw('basket');
+})();
+// Plaza
+(function(){
+  const seg=$('#plazaSeg'); PLAZA.forEach((p,i)=>{ const b=el('button',{type:'button',role:'radio','aria-checked':i===0,'data-p':p.id,title:p.d,text:p.t}); b.tabIndex=i===0?0:-1; seg.append(b); });
+  radioGroup(seg,b=>App.set({plazaCfg:b.dataset.p}));
+})();
+// Paseo
+(function(){
+  const ol=$('#stops'); STOPS.forEach((s,i)=>{ const b=el('button',{type:'button','data-i':i},el('em',{text:i+1}),el('span',{},s.t,el('small',{text:s.s}))); ol.append(el('li',{},b)); });
+  ol.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; App.paseoGo(+b.dataset.i, false); });
+  $('#paseoPlay').addEventListener('click',()=>App.paseoPlay());
+})();
+// Accesos
+(function(){
+  const seg=$('#accSeg'); ACCESOS.forEach((a,i)=>{ const b=el('button',{type:'button',role:'radio','aria-checked':i===0,'data-g':a.id,text:a.t}); b.tabIndex=i===0?0:-1; b.className=''; seg.append(b); }); seg.classList.add('seg');
+  const card=$('#accCard');
+  function draw(id){ const a=ACCESOS.find(x=>x.id===id); card.replaceChildren(el('b',{text:a.t}),el('p',{text:a.d}),el('div',{class:'src',style:'margin-top:8px',text:'Fuente: '+a.src})); }
+  radioGroup(seg,b=>{ draw(b.dataset.g); App.set({acc:b.dataset.g}); });
+  draw('locales');
+})();
+// Números
+(function(){
+  const box=$('#nums'); NUMS.forEach(n=>{ const inner=[el('span',{class:'v',text:n.v}),el('span',{class:'l',text:n.l})]; let t; if(n.hl){ t=el('button',{type:'button',class:'num-t','aria-pressed':'false','data-hl':n.hl},...inner,el('span',{class:'go',text:'Ver en el modelo'})); } else { t=el('div',{class:'num-t'},...inner); } box.append(t); });
+  box.addEventListener('click',e=>{ const b=e.target.closest('button.num-t'); if(!b) return; const on=b.getAttribute('aria-pressed')!=='true'; $$('button.num-t',box).forEach(x=>x.setAttribute('aria-pressed','false')); if(on) b.setAttribute('aria-pressed','true'); App.set({numHL:on?b.dataset.hl:null}); });
+})();
+// Galería
+(function(){
+  const g=$('#gal'); GALLERY.forEach(k=>{ const b=el('button',{class:'fig',type:'button','data-img':k},el('img',{src:'img/'+k+'.jpg',alt:IMGS[k].c,loading:'lazy'})); g.append(b); });
+})();
+// Lightbox
+(function(){
+  const lb=$('#lightbox'), img=$('#lbImg'), cap=$('#lbCap'), src=$('#lbSrc'); let list=[], idx=0, lastFocus=null;
+  function open(k, scope){ list=$$('[data-img]',scope).map(b=>b.dataset.img); if(!list.includes(k)) list=[k]; idx=list.indexOf(k); lastFocus=document.activeElement; show(); lb.hidden=false; $('#lbClose').focus(); document.body.style.overflow='hidden'; }
+  function show(){ const k=list[idx]; img.src='img/'+k+'.jpg'; img.alt=IMGS[k].c; cap.textContent=IMGS[k].c; src.textContent='Anteproyecto, pág. '+IMGS[k].p; }
+  function close(){ lb.hidden=true; document.body.style.overflow=''; if(lastFocus) lastFocus.focus(); }
+  document.addEventListener('click',e=>{ const b=e.target.closest('[data-img]'); if(!b) return; open(b.dataset.img, b.closest('.chapter')||document); });
+  $('#lbClose').onclick=close; $('#lbPrev').onclick=()=>{ idx=(idx-1+list.length)%list.length; show(); }; $('#lbNext').onclick=()=>{ idx=(idx+1)%list.length; show(); };
+  lb.addEventListener('click',e=>{ if(e.target===lb||e.target.classList.contains('lb-img')) close(); });
+  document.addEventListener('keydown',e=>{ if(lb.hidden) return; if(e.key==='Escape') close(); if(e.key==='ArrowLeft') $('#lbPrev').click(); if(e.key==='ArrowRight') $('#lbNext').click(); });
+})();
+
+/* =========================================================
+   APP: estado compartido entre capítulos y modelo 3D
+   ========================================================= */
+const App = {
+  st:{chapter:'inicio', hp:null, concept:1, rec:'todos', explode:0, etapa:1, est:'bowl', scen:5, arenaMode:'basket', plazaCfg:'plaza', paseo:-1, acc:'locales', numHL:null},
+  V:null,
+  set(p){ Object.assign(this.st,p); this.apply(p); },
+  apply(changed){ if(this.V) this.V.update(this.st, changed||{}); updateCaption(); syncHP(); },
+  onScenario(i){ this.st.scen=i; if(this.st.chapter==='estadio' && this.st.est!=='cancha'){ this.st.est='cancha'; setChecked($('#estSeg'),$('#estSeg [data-e="cancha"]')); renderEst('cancha'); } this.apply({scen:1, est:1}); },
+  paseoGo(i, auto){ this.st.paseo=i; $$('#stops button').forEach((b,j)=>b.setAttribute('aria-current', j===i)); if(!auto) this.stopPaseo(); this.apply({paseo:1}); },
+  paseoTimer:null,
+  paseoPlay(){ this.stopPaseo(); let i=0; const step=()=>{ this.paseoGo(i,true); i++; if(i<STOPS.length) this.paseoTimer=setTimeout(step, reduced?1800:3400); else { this.paseoTimer=null; setPlay(false); } }; setPlay(true); step(); },
+  stopPaseo(){ if(this.paseoTimer){ clearTimeout(this.paseoTimer); this.paseoTimer=null; } setPlay(false); }
+};
+function setPlay(on){ const b=$('#paseoPlay'); b.querySelector('span').textContent=on?'Recorriendo…':'Recorrer el paseo'; }
+
+function updateCaption(){
+  const s=App.st, cap=$('#stageCap'); let txt='';
+  const hp=s.hp;
+  switch(s.chapter){
+    case 'historia': txt = hp==='prop'?'Propuesta':'El estadio hoy'; break;
+    case 'concepto': txt = hp? (hp==='hoy'?'Hoy':'Propuesta') : 'Concepto '+s.concept+' · '+CONCEPT[s.concept].t; break;
+    case 'complejo': txt = s.explode>0.02? 'Capas del edificio' : (s.rec==='todos'?'Tres recintos':RECINTOS[s.rec].t); break;
+    case 'etapas': txt = s.etapa===0?'Hoy':s.etapa===15?'Proyecto completo':'Etapa '+s.etapa+' · '+ETAPAS[s.etapa].t; break;
+    case 'estadio': txt = s.est==='techo'?'Estructura del techo':s.est==='cancha'?'Cancha a '+SCEN[s.scen].s+' ('+SCEN[s.scen].t+')':'Gradas 360°'; break;
+    case 'arena': txt = 'Arena · '+ARENA.find(a=>a.id===s.arenaMode).t; break;
+    case 'plaza': txt = 'Plaza del Hincha · '+PLAZA.find(p=>p.id===s.plazaCfg).t; break;
+    case 'museos': txt = s.paseo>=0? 'Paseo · '+(s.paseo+1)+'. '+STOPS[s.paseo].t : 'Fachada histórica y museos'; break;
+    case 'llegada': txt = 'Accesos · '+ACCESOS.find(a=>a.id===s.acc).t; break;
+    case 'numeros': txt = s.numHL? 'En rojo: '+(NUMS.find(n=>n.hl===s.numHL).l) : 'Proyecto completo'; break;
+    default: txt = hp==='hoy'?'El estadio hoy':'Propuesta';
+  }
+  if(hp && !['historia','concepto'].includes(s.chapter) && s.chapter!=='inicio') txt = (hp==='hoy'?'Hoy':'Propuesta')+' · '+txt;
+  cap.textContent=txt;
+}
+function effectiveHP(){ const s=App.st; if(s.hp) return s.hp; if(s.chapter==='historia') return 'hoy'; if(s.chapter==='concepto') return s.concept===1?'hoy':'prop'; if(s.chapter==='etapas') return s.etapa===0?'hoy':'prop'; return 'prop'; }
+function syncHP(){ const hp=effectiveHP(); $$('[data-hp][role="radio"]').forEach(b=>{ b.setAttribute('aria-checked', b.dataset.hp===hp); }); }
+
+// Hoy/Propuesta buttons (toolbar + inicio)
+document.addEventListener('click',e=>{ const b=e.target.closest('[data-hp]'); if(!b) return; const hp=b.dataset.hp; if(App.st.chapter==='etapas'){ setEtapa(hp==='hoy'?0:15); return; } App.set({hp}); if(b.closest('.chapter')) {} });
+// Día / Noche
+const dnGroup = document.querySelector('[aria-label="Iluminación"]');
+radioGroup(dnGroup, b=>{ if(App.V) App.V.setNight(b.dataset.dn==='night', true); });
+
+// Concepto
+radioGroup($('#conceptSeg'), b=>{ const c=+b.dataset.c; renderConcept(c); App.set({concept:c, hp:null}); });
+// Recintos
+radioGroup($('#recSeg'), b=>{ renderRec(b.dataset.r); App.set({rec:b.dataset.r, explode:0}); $('#explode').value=0; });
+// Explode
+$('#explode').addEventListener('input', e=>{ App.set({explode:+e.target.value/100}); });
+// Estadio
+function renderEst(k){ const card=$('#estCard'); const D={
+  bowl:{t:'Un anillo de pasión',d:'Una tribuna baja continua envuelve la cancha, sin cortes. Las primeras 30 filas son para hinchas de Nacional en todas las competencias.',f:[['30 filas','para la hinchada local, en 360°'],['−75 cm','baja la cancha: mejora la visibilidad y permite sumar filas cerca del campo']]},
+  techo:{t:'Un cielo propio',d:'La cubierta es independiente del bowl y se apoya en columnas de acero esbeltas en el perímetro, que también sostienen la fachada. Cubrir todas las butacas cumple los requisitos FIFA para partidos de alto nivel, como los del Mundial 2030.',f:[['2 × 154 m','vigas principales en los extremos de la Delgado y la Atilio García'],['2 × 107 m','vigas principales paralelas a esas tribunas'],['+40,30','cota de la cubierta en la planta de techos']]},
+  cancha:{t:'La cancha, 75 cm más abajo',d:'El centro de la cancha pasa de +1,40 m a +0,65 m. Se rehace el perfil, el riego y el drenaje, con pendiente a cuatro aguas.',f:[['105 × 68 m','medidas oficiales FIFA, CONMEBOL y AUF'],['4.918','asientos que hoy tienen la visión obstruida se recuperan']]}
+}[k]; const ul=el('ul',{class:'facts',style:'margin-top:4px'}); D.f.forEach(r=>ul.append(el('li',{},el('b',{text:r[0]}),el('span',{text:r[1]})))); card.replaceChildren(el('div',{style:'font:800 24px/1 var(--f-display);text-transform:uppercase;margin-bottom:8px',text:D.t}),el('p',{style:'font-size:15px;color:var(--ink-2)',text:D.d}),ul,el('div',{class:'src',text:k==='techo'?'Fuente: págs. 45, 70–71 y 106.':k==='cancha'?'Fuente: págs. 58–61.':'Fuente: págs. 45 y 62.'})); }
+renderEst('bowl');
+radioGroup($('#estSeg'), b=>{ renderEst(b.dataset.e); App.set({est:b.dataset.e}); });
+
+// Etapas
+let etTimer=null;
+function setEtapa(i){ i=Math.max(0,Math.min(15,i)); App.st.etapa=i; const E=ETAPAS[i];
+  const num=$('#etNum'); num.textContent= i===0?'0':i===15?'✓':i; num.classList.toggle('neutral', i===0||i===15);
+  $('#etTitle').textContent=E.t; $('#etLevels').textContent=E.lv;
+  $$('#etTicks button').forEach((b,j)=>{ b.setAttribute('aria-current', j===i); b.classList.toggle('done', j<i && j>0); });
+  const card=$('#etCard'); const ob=el('ul',{class:'ob'}); E.ob.forEach(o=>ob.append(el('li',{text:o})));
+  const kids=[el('h4',{text:i===0?'Situación':i===15?'Resultado':'Obras'}),ob];
+  if(E.ud.length){ const ul=el('ul',{class:'chips red'}); E.ud.forEach(u=>ul.append(el('li',{text:u}))); kids.push(el('h4',{text:'Nuevas unidades de negocio'}),ul); }
+  if(E.nota){ const n=el('div',{class:'note'}); n.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>'; n.append(el('span',{text:E.nota})); kids.push(n); }
+  card.replaceChildren(...kids);
+  App.set({etapa:i, hp:null});
+}
+$('#etTicks').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; stopEt(); setEtapa(+b.dataset.s); });
+$('#etPrev').onclick=()=>{ stopEt(); setEtapa(App.st.etapa-1); };
+$('#etNext').onclick=()=>{ stopEt(); setEtapa(App.st.etapa+1); };
+function stopEt(){ if(etTimer){ clearInterval(etTimer); etTimer=null; } $('#etPlay span').textContent='Reproducir'; }
+$('#etPlay').onclick=()=>{ if(etTimer){ stopEt(); return; } let i=App.st.etapa>=15?0:App.st.etapa; setEtapa(i); $('#etPlay span').textContent='Pausar'; etTimer=setInterval(()=>{ i++; setEtapa(i); if(i>=15) stopEt(); }, reduced?2200:2600); };
+setEtapa(1);
+
+/* =========================================================
+   CAPÍTULO ACTIVO
+   ========================================================= */
+const chapters=$$('.chapter');
+const navLinks=$$('#chapnav a');
+function activate(id){ if(App.st.chapter===id) return; App.stopPaseo(); if(id!=='etapas') stopEt(); App.st.hp=null; if(id!=='museos'){ App.st.paseo=-1; $$('#stops button').forEach(b=>b.setAttribute('aria-current','false')); }
+  navLinks.forEach(a=>{ const on=a.getAttribute('href')==='#'+id; a.setAttribute('aria-current',on); if(on){ const nav=$('.chapnav'); const r=a.getBoundingClientRect(), nr=nav.getBoundingClientRect(); if(r.left<nr.left||r.right>nr.right) nav.scrollBy({left:r.left-nr.left-40,behavior:reduced?'auto':'smooth'}); } });
+  App.st.chapter=id; App.apply({chapter:1}); }
+function pickActive(){ const mobile=innerWidth<=980; const probe = mobile? (innerHeight*0.46+ (innerHeight-innerHeight*0.46)*0.35) : innerHeight*0.42; let best=chapters[0]; for(const c of chapters){ const r=c.getBoundingClientRect(); if(r.top<=probe) best=c; } activate(best.dataset.ch); }
+let scrollRaf=0; addEventListener('scroll',()=>{ if(scrollRaf) return; scrollRaf=requestAnimationFrame(()=>{ scrollRaf=0; pickActive(); }); },{passive:true});
+addEventListener('resize',pickActive);
+navLinks.forEach(a=>a.addEventListener('click',e=>{ const id=a.getAttribute('href').slice(1); const t=document.getElementById(id); if(!t) return; e.preventDefault(); const mobile=innerWidth<=980; const offset=(mobile? $('#stage').getBoundingClientRect().height:0)+ $('.topbar').getBoundingClientRect().height + 8; const y=t.getBoundingClientRect().top+scrollY-offset+ (mobile?0:0); scrollTo({top:y,behavior:reduced?'auto':'smooth'}); history.replaceState(null,'','#'+id); }));
+
+/* =========================================================
+   MODELO 3D
+   ========================================================= */
+function init3D(){
+  if(typeof THREE==='undefined') throw new Error('three no disponible');
+  const stageEl=$('#stage'), canvas=$('#gl'), labelsEl=$('#labels');
+  const renderer=new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
+  renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.0;
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(34,1,2,5000);
+  const DAY_BG=new THREE.Color('#dde5ed'), NIGHT_BG=new THREE.Color('#0b1426');
+  scene.background=DAY_BG.clone(); scene.fog=new THREE.Fog(DAY_BG.clone(), 800, 1900);
+
+  const hemi=new THREE.HemisphereLight(0xffffff, 0xb3bfcc, 1.9); scene.add(hemi);
+  const sun=new THREE.DirectionalLight(0xfff7ee, 2.7); sun.position.set(-190,300,-240); sun.target.position.set(-40,0,15);
+  sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); Object.assign(sun.shadow.camera,{left:-290,right:290,top:260,bottom:-260,near:50,far:900}); sun.shadow.bias=-0.0004; sun.shadow.normalBias=0.8;
+  scene.add(sun, sun.target);
+  const flood=new THREE.PointLight(0xfff1dd, 0, 330, 1.0); flood.position.set(0,70,0); scene.add(flood);
+  const plazaLight=new THREE.PointLight(0xffd9a8, 0, 140, 1.0); plazaLight.position.set(-143,26,10); scene.add(plazaLight);
+
+  /* ---------- materiales ---------- */
+  const std=(c,r=0.9,x={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:r,metalness:0},x));
+  const tex=(w,h,draw,rep)=>{ const c=document.createElement('canvas'); c.width=w; c.height=h; draw(c.getContext('2d'),w,h); const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy()); if(rep){ t.wrapS=t.wrapT=THREE.RepeatWrapping; } return t; };
+  const pleatT=tex(64,8,(g,w,h)=>{ const gr=g.createLinearGradient(0,0,w,0); gr.addColorStop(0,'#ffffff'); gr.addColorStop(.35,'#f5f7fa'); gr.addColorStop(.72,'#d6dde6'); gr.addColorStop(.9,'#eef2f6'); gr.addColorStop(1,'#ffffff'); g.fillStyle=gr; g.fillRect(0,0,w,h); }, true);
+  const M={
+    clay:std('#f3f6f9',0.92), clay2:std('#e9eef3',0.95), ctx:std('#e3e9ef',1), ground:std('#d3dce5',1), site:std('#e8edf2',1), street:std('#c7d1dc',1),
+    tier:std('#f2f5f8',0.9,{vertexColors:true, side:THREE.DoubleSide}),
+    red:std('#dc2a30',0.65,{emissive:'#3a0306'}), redTier:std('#e0353b',0.65,{vertexColors:true, side:THREE.DoubleSide, emissive:'#2a0305'}),
+    redGlass:new THREE.MeshStandardMaterial({color:'#e0353b',transparent:true,opacity:0.32,depthWrite:false,roughness:.5,side:THREE.DoubleSide}),
+    ghost:new THREE.MeshStandardMaterial({color:'#ffffff',transparent:true,opacity:0.16,depthWrite:false,roughness:.6}),
+    glass:new THREE.MeshStandardMaterial({color:'#bcd0e4',transparent:true,opacity:0.35,depthWrite:false,roughness:.15,metalness:.1,side:THREE.DoubleSide}),
+    glaze:std('#6f829b',0.25,{metalness:.2,emissive:'#000000',side:THREE.DoubleSide}),
+    skin:std('#ffffff',0.6,{map:pleatT, side:THREE.DoubleSide}),
+    roof:std('#f7f8fa',0.8),
+    grass:std('#6aa464',0.95), apron:std('#7f9a86',0.95), brick:std('#a9765c',0.9), towerM:std('#e7e1d8',0.85,{flatShading:true}),
+    track:std('#3563c4',0.8), board:std('#1c2a45',0.6,{emissive:'#000000'}), goal:std('#ffffff',0.4),
+    screen:new THREE.MeshStandardMaterial({color:'#101a33',roughness:.4,emissive:'#2a4c9a',emissiveIntensity:0.6}),
+    ribbon:new THREE.MeshStandardMaterial({color:'#101a33',roughness:.4,emissive:'#d12026',emissiveIntensity:0.7}),
+    truss:std('#8b99ad',0.45,{metalness:.5}), people:std('#ffffff',0.9), plazaF:std('#e6e2da',0.95), planter:std('#79ad6c',1),
+    tentB:std('#ffffff',0.8), tentR:std('#d12026',0.7), chair:std('#23345c',0.8), stage:std('#232b3a',0.7), wood:std('#d8b27c',0.7),
+    capaz:new THREE.MeshStandardMaterial({color:'#e0353b',transparent:true,opacity:0.22,depthWrite:false,side:THREE.DoubleSide}),
+    edge:new THREE.LineBasicMaterial({color:'#d12026',transparent:true,opacity:.9}),
+    siteLine:new THREE.LineDashedMaterial({color:'#d12026',dashSize:4,gapSize:3})
+  };
+
+  /* ---------- helpers de geometría ---------- */
+  const root=new THREE.Group(); scene.add(root);
+  const ctxGroup=new THREE.Group(); scene.add(ctxGroup);
+  function prismGeo(pts, y0, y1, holes){ const sh=new THREE.Shape(pts.map(([x,z])=>new THREE.Vector2(x,-z))); (holes||[]).forEach(h=>sh.holes.push(new THREE.Path(h.map(([x,z])=>new THREE.Vector2(x,-z))))); const g=new THREE.ExtrudeGeometry(sh,{depth:Math.max(0.01,y1-y0),bevelEnabled:false,curveSegments:20}); g.rotateX(-Math.PI/2); g.translate(0,y0,0); return g; }
+  const rectPts=(x0,x1,z0,z1)=>[[x0,z0],[x1,z0],[x1,z1],[x0,z1]];
+  function boxGeo(x0,x1,y0,y1,z0,z1){ const g=new THREE.BoxGeometry(x1-x0,y1-y0,z1-z0); g.translate((x0+x1)/2,(y0+y1)/2,(z0+z1)/2); return g; }
+  function circlePts(cx,cz,r,n=40){ const a=[]; for(let i=0;i<n;i++){ const t=i/n*Math.PI*2; a.push([cx+r*Math.cos(t), cz+r*Math.sin(t)]); } return a; }
+  function roundRectPts(x0,x1,z0,z1,r,corners={nw:1,ne:1,se:1,sw:1},n=8){ const p=[]; const arc=(cx,cz,a0,a1)=>{ for(let i=0;i<=n;i++){ const t=(a0+(a1-a0)*i/n)*Math.PI/180; p.push([cx+r*Math.cos(t), cz+r*Math.sin(t)]); } };
+    if(corners.nw) arc(x0+r,z0+r,180,270); else p.push([x0,z0]);
+    if(corners.ne) arc(x1-r,z0+r,270,360); else p.push([x1,z0]);
+    if(corners.se) arc(x1-r,z1-r,0,90); else p.push([x1,z1]);
+    if(corners.sw) arc(x0+r,z1-r,90,180); else p.push([x0,z1]);
+    return p; }
+  function planeXZ(x0,x1,z0,z1,y,mat){ const g=new THREE.PlaneGeometry(x1-x0,z1-z0); g.rotateX(-Math.PI/2); g.translate((x0+x1)/2,y,(z0+z1)/2); return new THREE.Mesh(g,mat); }
+  // Superficie vertical con UV en metros (para la piel plegada)
+  function skinGeo(ax,az,bx,bz,y0,y1,panel=2.6){ const L=Math.hypot(bx-ax,bz-az); const g=new THREE.PlaneGeometry(L,y1-y0); const uv=g.attributes.uv; for(let i=0;i<uv.count;i++) uv.setX(i, uv.getX(i)*L/panel); const ang=Math.atan2(-(bz-az), bx-ax); g.rotateY(ang); g.translate((ax+bx)/2,(y0+y1)/2,(az+bz)/2); return g; }
+
+  // Anillos de gradas (rectángulo redondeado paralelo a la cancha)
+  function rrPoly(A0,B0,R0,d,spec){ const a=A0+d,b=B0+d,r=Math.max(0.01,R0+d),ax=A0-R0,bz=B0-R0; const pts=[];
+    const add=(x,z)=>{ const L=pts[pts.length-1]; if(L&&Math.abs(L[0]-x)<1e-6&&Math.abs(L[1]-z)<1e-6) return; pts.push([x,z]); };
+    const corner=(cx,cz,t0,t1,n)=>{ for(let i=0;i<=n;i++){ const t=(t0+(t1-t0)*i/n)*Math.PI/180; add(cx+r*Math.cos(t), cz+r*Math.sin(t)); } };
+    for(const s0 of spec){ const s=typeof s0==='string'?{p:s0}:s0; const n=s.n||(s.p.length===2?12:2);
+      if(s.p==='N'){ const x0=s.from??-ax,x1=s.to??ax; for(let i=0;i<=n;i++) add(x0+(x1-x0)*i/n,-b); }
+      else if(s.p==='S'){ const x0=s.from??ax,x1=s.to??-ax; for(let i=0;i<=n;i++) add(x0+(x1-x0)*i/n,b); }
+      else if(s.p==='E'){ const z0=s.from??-bz,z1=s.to??bz; for(let i=0;i<=n;i++) add(a,z0+(z1-z0)*i/n); }
+      else if(s.p==='W'){ const z0=s.from??bz,z1=s.to??-bz; for(let i=0;i<=n;i++) add(-a,z0+(z1-z0)*i/n); }
+      else if(s.p==='NE') corner(ax,-bz,-90,0,n); else if(s.p==='SE') corner(ax,bz,0,90,n); else if(s.p==='SW') corner(-ax,bz,90,180,n); else if(s.p==='NW') corner(-ax,-bz,180,270,n); }
+    return pts; }
+  function tierGeo(spec,o){ const cx=o.cx||0, cz=o.cz||0; const P=d=>rrPoly(o.A0,o.B0,o.R0,d,spec).map(([x,z])=>[x+cx,z+cz]); const pos=[],col=[]; const yb=o.yBase??0;
+    const tri=(p,hp,q,hq,r,hr,s)=>{ pos.push(p[0],hp,p[1],q[0],hq,q[1],r[0],hr,r[1]); for(let i=0;i<9;i++) col.push(s); };
+    const strip=(A,ha,B,hb,s)=>{ for(let k=0;k<A.length-1;k++){ tri(A[k],ha,A[k+1],ha,B[k+1],hb,s); tri(A[k],ha,B[k+1],hb,B[k],hb,s); } };
+    const quad=(a,ha,b,hb,c,hc,d,hd,s)=>{ tri(a,ha,b,hb,c,hc,s); tri(a,ha,c,hc,d,hd,s); };
+    let d=o.d0, h=o.y0; const F=P(d); strip(F,yb,F,h,0.8);
+    for(let i=0;i<o.rows;i++){ const Pi=P(d), Pn=P(d+o.tread), hn=h+o.rise; strip(Pi,h,Pi,hn,0.83); strip(Pi,hn,Pn,hn,i%2?0.95:1.0);
+      if(!o.closed){ const e=Pi.length-1; quad(Pi[0],yb,Pn[0],yb,Pn[0],hn,Pi[0],hn,0.8); quad(Pi[e],yb,Pn[e],yb,Pn[e],hn,Pi[e],hn,0.8); }
+      d+=o.tread; h=hn; }
+    const B=P(d); strip(B,h,B,yb,0.74);
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(col,3)); g.computeVertexNormals(); return g; }
+
+  /* ---------- sistema de partes (para etapas, capas y resaltados) ---------- */
+  const parts={};
+  const LAYER_OFF=[-42,0,28,60,96,134];
+  function part(id,o={}){ const g=new THREE.Group(); g.name=id; root.add(g); const p=Object.assign({id,g,stage:0,until:null,hl:[],layer:1,baseY:0,meshes:[],shown:true,red:false,ghost:false,tw:null},o); g.position.y=p.baseY; parts[id]=p; return p; }
+  function add(p,geo,mat,o={}){ geo.translate(0,-p.baseY,0); const m=new THREE.Mesh(geo,mat); m.castShadow=o.cast!==false; m.receiveShadow=o.receive!==false; m.userData.base=mat; m.userData.layer=o.layer??p.layer; m.userData.noRed=!!o.noRed; m.userData.noGhost=!!o.noGhost; p.g.add(m); p.meshes.push(m); return m; }
+  function addObj(p,obj,o={}){ obj.position.y-=p.baseY; obj.userData.layer=o.layer??p.layer; obj.userData.isObj=true; p.g.add(obj); p.meshes.push(obj); return obj; }
+
+  /* ---------- contexto urbano ---------- */
+  const Z_A=x=>-98.9-0.072*(x+46), Z_U=x=>108-0.05*x, X_J=z=>100.6-0.145*(z+1.2);
+  const APRON=rrPoly(52.5,34,-3,9,['N','NE','E','SE','S','SW','W','NW']);
+  const ground=new THREE.Mesh(prismGeo(rectPts(-1600,1600,-1600,1600),-0.05,-0.02,[APRON]),M.ground); ground.receiveShadow=true; ctxGroup.add(ground);
+  // calles
+  const STREETS=[];
+  function streetPoly(pts,hw){ const out=[],back=[]; for(let i=0;i<pts.length;i++){ const a=pts[Math.max(0,i-1)], b=pts[Math.min(pts.length-1,i+1)]; const dx=b[0]-a[0], dz=b[1]-a[1], L=Math.hypot(dx,dz); const nx=-dz/L*hw, nz=dx/L*hw; out.push([pts[i][0]+nx,pts[i][1]+nz]); back.unshift([pts[i][0]-nx,pts[i][1]-nz]); } return out.concat(back); }
+  const streetDefs=[
+    {n:'Carlos Anaya',pts:[[-420,Z_A(-420)],[300,Z_A(300)]],hw:6,lab:[-128,Z_A(-128)]},
+    {n:'Gral. Urquiza',pts:[[-420,Z_U(-420)],[300,Z_U(300)]],hw:6.5,lab:[-40,Z_U(-40)]},
+    {n:'',pts:[[-420,Z_A(-420)-92],[300,Z_A(300)-92]],hw:6},
+    {n:'Av. 8 de Octubre',pts:[[-420,Z_U(-420)+96],[300,Z_U(300)+96]],hw:11,lab:[-60,Z_U(-60)+96]},
+    {n:'Cdte. Braga',pts:[[-207,-260],[-207,300]],hw:4.5,lab:[-207,-40]},
+    {n:'Jaime Cibils',pts:[[X_J(-260),-260],[X_J(300),300]],hw:5.75,lab:[X_J(35),35]},
+    {n:'',pts:[[-302,-260],[-302,300]],hw:5},
+    {n:'',pts:[[X_J(-260)+96,-260],[X_J(300)+96,300]],hw:5},
+    {n:'Juan Ramón Gómez',pts:[[-302,21],[-207,21]],hw:5,lab:[-255,21]},
+    {n:'Juan Ramón Gómez',pts:[[X_J(-10),-10],[X_J(-10)+96,-10]],hw:5,lab:[150,-10]},
+    {n:'Lucas Piriz',pts:[[-67,Z_A(-67)-92],[-67,Z_A(-67)]],hw:4.5,lab:[-67,Z_A(-67)-46]},
+    {n:'T. Azambuya',pts:[[-19,Z_A(-19)-92],[-19,Z_A(-19)]],hw:4.5,lab:[-19,Z_A(-19)-46]}
+  ];
+  streetDefs.forEach(s=>{ const m=new THREE.Mesh(prismGeo(streetPoly(s.pts,s.hw),0,0.05),M.street); m.receiveShadow=true; ctxGroup.add(m); if(s.n) STREETS.push({n:s.n,p:new THREE.Vector3(s.lab[0],0.4,s.lab[1])}); });
+  // predio
+  const SITE=[[-181,-77],[X_J(-77)-5.75,-77],[X_J(60)-5.75,60],[58,60],[58,Z_U(58)-6.5],[-128,Z_U(-128)-6.5],[-128,62],[-199,62]];
+  const siteM=new THREE.Mesh(prismGeo(SITE,0,0.1,[APRON]),M.site); siteM.receiveShadow=true; ctxGroup.add(siteM);
+  const siteLineGeo=new THREE.BufferGeometry().setFromPoints(SITE.concat([SITE[0]]).map(([x,z])=>new THREE.Vector3(x,0.35,z)));
+  const siteLine=new THREE.Line(siteLineGeo,M.siteLine); siteLine.computeLineDistances(); siteLine.visible=false; scene.add(siteLine);
+  // lotes vecinos (contexto genérico de casas bajas)
+  const rand=(()=>{ let s=7; return ()=>(s=(s*1664525+1013904223)>>>0)/4294967296; })();
+  const lots=[];
+  function inter(l1,l2){ const [p1,d1]=l1,[p2,d2]=l2; const den=d1[0]*d2[1]-d1[1]*d2[0]; const t=((p2[0]-p1[0])*d2[1]-(p2[1]-p1[1])*d2[0])/den; return [p1[0]+d1[0]*t,p1[1]+d1[1]*t]; }
+  function Lh(zf,off){ return [[0,zf(0)+off],[1,zf(1)-zf(0)]]; }
+  function Lv(xf,off){ return [[xf(0)+off,0],[xf(1)-xf(0),1]]; }
+  const ZA=x=>Z_A(x), ZM=x=>Z_A(x)-92, ZU=x=>Z_U(x), Z8=x=>Z_U(x)+96, XB=()=>-207, XJ=z=>X_J(z), XBe=()=>-302, XE=z=>X_J(z)+96;
+  function blockFrom(top,bottom,left,right){ return [inter(top,left),inter(top,right),inter(bottom,right),inter(bottom,left)]; }
+  const blocks=[
+    blockFrom(Lh(ZM,6),Lh(ZA,-6),Lv(XBe,5),Lv(XB,-4.5)), blockFrom(Lh(ZM,6),Lh(ZA,-6),Lv(XB,4.5),Lv(()=>-67,-4.5)), blockFrom(Lh(ZM,6),Lh(ZA,-6),Lv(()=>-67,4.5),Lv(()=>-19,-4.5)),
+    blockFrom(Lh(ZM,6),Lh(ZA,-6),Lv(()=>-19,4.5),Lv(XJ,-5.75)), blockFrom(Lh(ZM,6),Lh(ZA,-6),Lv(XJ,5.75),Lv(XE,-5)),
+    blockFrom(Lh(ZA,6),Lh(()=>21,-5),Lv(XBe,5),Lv(XB,-4.5)), blockFrom(Lh(()=>21,5),Lh(ZU,-6.5),Lv(XBe,5),Lv(XB,-4.5)),
+    blockFrom(Lh(ZA,6),Lh(()=>-10,-5),Lv(XJ,5.75),Lv(XE,-5)), blockFrom(Lh(()=>-10,5),Lh(ZU,-6.5),Lv(XJ,5.75),Lv(XE,-5)),
+    blockFrom(Lh(ZU,6.5),Lh(Z8,-11),Lv(XBe,5),Lv(XB,-4.5)), blockFrom(Lh(ZU,6.5),Lh(Z8,-11),Lv(XB,4.5),Lv(XJ,-5.75)), blockFrom(Lh(ZU,6.5),Lh(Z8,-11),Lv(XJ,5.75),Lv(XE,-5))
+  ];
+  function lotsAlong(a,b,inward,maxD,zone){ const dx=b[0]-a[0], dz=b[1]-a[1], L=Math.hypot(dx,dz); const ux=dx/L, uz=dz/L; let nx=-uz, nz=ux; if(nx*inward[0]+nz*inward[1]<0){ nx=-nx; nz=-nz; } let s=0; while(s<L-3){ let w=8+rand()*6; if(s+w>L) w=L-s; if(w<4) break; const D=Math.min(maxD, 16+rand()*12); const h=rand()<0.06? 11+rand()*9 : 3.5+rand()*5.5; lots.push({x:a[0]+ux*(s+w/2)+nx*D/2, z:a[1]+uz*(s+w/2)+nz*D/2, w:w-0.6, d:D-0.6, h, ang:Math.atan2(-uz,ux), zone}); s+=w; } }
+  blocks.forEach(B=>{ const cx=(B[0][0]+B[1][0]+B[2][0]+B[3][0])/4, cz=(B[0][1]+B[1][1]+B[2][1]+B[3][1])/4; for(let i=0;i<4;i++){ const a=B[i], b=B[(i+1)%4]; const mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2; const L=Math.hypot(b[0]-a[0],b[1]-a[1]); const depth=Math.min(28, (i%2? Math.hypot(B[1][0]-B[0][0],B[1][1]-B[0][1]) : Math.hypot(B[3][0]-B[0][0],B[3][1]-B[0][1]))*0.45); lotsAlong(a,b,[cx-mx,cz-mz],depth,'ctx'); } });
+  // padrones linderos dentro de la manzana del estadio
+  const anayaS=x=>Z_A(x)+6;
+  lotsAlong([-202.5,anayaS(-202.5)],[X_J(anayaS(100))-5.75,anayaS(100)],[0,1],99,'anaya'); // se recorta por profundidad real abajo
+  const WESTSTRIP=[[-202.5,anayaS(-202.5)],[-181,-77],[-199,62],[-202.5,62]];
+  lotsAlong([-202.5,-70],[-202.5,62],[1,0],10,'braga');
+  lotsAlong([-202.5,62],[-202.5,Z_U(-202.5)-6.5],[1,0],26,'sw'); lotsAlong([-202.5,Z_U(-202.5)-6.5],[-128,Z_U(-128)-6.5],[0,-1],26,'sw');
+  lotsAlong([X_J(66)-5.75,66],[X_J(Z_U(80))-5.75,Z_U(80)-6.5],[-1,0],22,'se'); lotsAlong([60,Z_U(60)-6.5],[X_J(Z_U(80))-5.75,Z_U(80)-6.5],[0,-1],24,'se');
+  // recortar lotes sobre Anaya a la franja entre la calle y el predio
+  lots.forEach(l=>{ if(l.zone==='braga'){ const bx=-181-(l.z+77)/139*18; const dmax=Math.max(2.5,bx-(-202.5)); l.d=Math.min(l.d,dmax-0.6); l.x=-202.5+l.d/2+0.3; }
+    if(l.zone==='anaya'){ const top=anayaS(l.x); const dmax=Math.max(3,-77-top); l.d=Math.min(l.d,dmax-0.6); l.z=top+l.d/2+0.3; } });
+  const lotGeo=new THREE.BoxGeometry(1,1,1).translate(0,0.5,0);
+  const lotMesh=new THREE.InstancedMesh(lotGeo,M.ctx,lots.length); lotMesh.castShadow=true; lotMesh.receiveShadow=true;
+  const _m=new THREE.Matrix4(), _q=new THREE.Quaternion(), _s=new THREE.Vector3(), _p=new THREE.Vector3(), _up=new THREE.Vector3(0,1,0);
+  function writeLots(hideZones){ lots.forEach((l,i)=>{ const hide=hideZones&&hideZones.includes(l.zone); _q.setFromAxisAngle(_up,l.ang); _s.set(l.w,hide?0.001:l.h,l.d); _p.set(l.x,hide?-5:0,l.z); _m.compose(_p,_q,_s); lotMesh.setMatrixAt(i,_m); }); lotMesh.instanceMatrix.needsUpdate=true; }
+  writeLots(null); ctxGroup.add(lotMesh);
+
+  /* ---------- cancha ---------- */
+  const PL=52.5, PW=34;
+  const pitchT=tex(1050,680,(g,w,h)=>{ for(let i=0;i<18;i++){ g.fillStyle=i%2?'#5c9a55':'#66a65f'; g.fillRect(i*w/18,0,w/18+1,h);} g.strokeStyle='rgba(255,255,255,.95)'; g.lineWidth=2.4; const s=10; g.strokeRect(1.5,1.5,w-3,h-3); g.beginPath(); g.moveTo(w/2,0); g.lineTo(w/2,h); g.stroke(); g.beginPath(); g.arc(w/2,h/2,9.15*s,0,Math.PI*2); g.stroke();
+    [0,1].forEach(side=>{ const x0=side?w-16.5*s:0; g.strokeRect(x0,h/2-20.16*s,16.5*s,40.32*s); const x1=side?w-5.5*s:0; g.strokeRect(x1,h/2-9.16*s,5.5*s,18.32*s); const px=side?w-11*s:11*s; g.beginPath(); g.arc(px,h/2,9.15*s, side?Math.PI-0.93:-0.93, side?Math.PI+0.93:0.93); g.stroke(); g.fillStyle='#fff'; g.beginPath(); g.arc(px,h/2,3,0,Math.PI*2); g.fill(); }); g.beginPath(); g.arc(w/2,h/2,3,0,Math.PI*2); g.fill(); });
+  const pitch=part('pitch',{stage:0,hl:[3],layer:1});
+  { const grass=planeXZ(-57.5,57.5,-39,39,0.02,M.grass); grass.receiveShadow=true; addObj(pitch,grass);
+    const pm=planeXZ(-PL,PL,-PW,PW,0.05,std('#ffffff',0.95,{map:pitchT})); pm.receiveShadow=true; pm.userData.base=pm.material; addObj(pitch,pm); pitch.pitchMesh=pm;
+    const ap=new THREE.Mesh(prismGeo(APRON,-3.2,0),M.apron); ap.receiveShadow=true; ap.userData.base=M.apron; addObj(pitch,ap);
+    [-1,1].forEach(sd=>{ const gg=new THREE.Group(); const post=(z)=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(0.15,2.44,0.15),M.goal); m.position.set(sd*PL,1.22,z); gg.add(m); }; post(-3.66); post(3.66); const bar=new THREE.Mesh(new THREE.BoxGeometry(0.15,0.15,7.47),M.goal); bar.position.set(sd*PL,2.44,0); gg.add(bar); addObj(pitch,gg); });
+    // placas de publicidad existentes
+    [[-48,48,-38.6,-38.3],[-48,48,38.3,38.6]].forEach(([x0,x1,z0,z1])=>addObj(pitch,new THREE.Mesh(boxGeo(x0,x1,0,0.9,z0,z1),M.board)));
+    [[-57.3,-57,-30,30],[57,57.3,-30,30]].forEach(([x0,x1,z0,z1])=>addObj(pitch,new THREE.Mesh(boxGeo(x0,x1,0,0.9,z0,z1),M.board)));
+  }
+  pitch.g.position.y=0.65;
+
+  /* ---------- gradas ---------- */
+  const LOW={A0:PL,B0:PW,R0:-3,d0:9,rows:30,tread:0.72,rise:0.38,y0:1.0};
+  const LOWEND=LOW.d0+LOW.rows*LOW.tread, REND=LOW.R0+LOWEND; // 30.6, 27.6
+  const tierPart=(id,spec,o,po)=>{ const p=part(id,po); add(p,tierGeo(spec,o),M.tier); return p; };
+  tierPart('lowN',[{p:'N'}],LOW,{stage:0,layer:1});
+  tierPart('lowS',[{p:'S'}],LOW,{stage:0,hl:[3],layer:1});
+  tierPart('lowW',[{p:'W'}],LOW,{stage:0,hl:[3],layer:1});
+  tierPart('lowE',[{p:'E'}],LOW,{stage:0,hl:[5],layer:1});
+  tierPart('lowSW',['SW'],LOW,{stage:0,hl:[3],layer:1});
+  tierPart('lowSE',['SE'],LOW,{stage:3,layer:1});
+  tierPart('lowNW',['NW'],LOW,{stage:4,layer:1});
+  tierPart('lowNE',['NE'],LOW,{stage:4,layer:1});
+  const UP={A0:PL,B0:PW,R0:0};
+  tierPart('upN',[{p:'N',from:-PL,to:PL}],Object.assign({},UP,{d0:22,rows:14,tread:1.43,rise:1.08,y0:15.4,yBase:14.9}),{stage:0,layer:3,baseY:14.9});
+  tierPart('upS',[{p:'S',from:PL,to:-PL}],Object.assign({},UP,{d0:22,rows:24,tread:1.34,rise:0.63,y0:15.4,yBase:14.9}),{stage:0,layer:3,baseY:14.9});
+  tierPart('upW',[{p:'W',from:PW,to:-PW}],Object.assign({},UP,{d0:22,rows:22,tread:1.4,rise:0.66,y0:15.4,yBase:14.9}),{stage:0,hl:[6],layer:3,baseY:14.9});
+  tierPart('upE',[{p:'E',from:-PW,to:PW}],Object.assign({},UP,{d0:22,rows:12,tread:1.04,rise:0.8,y0:15.4,yBase:14.9}),{stage:11,layer:3,baseY:14.9});
+  const UPC=Object.assign({},UP,{d0:22,rows:8,tread:1.5,rise:0.55,y0:15.4,yBase:14.9});
+  tierPart('upSW',['SW'],UPC,{stage:6,layer:3,baseY:14.9});
+  tierPart('upSE',['SE'],UPC,{stage:6,layer:3,baseY:14.9});
+  tierPart('upNW',['NW'],UPC,{stage:7,layer:3,baseY:14.9});
+  tierPart('upNE',['NE'],UPC,{stage:7,layer:3,baseY:14.9});
+  // techo metálico existente de la Delgado
+  { const p=part('exRoofN',{stage:0,until:12,layer:3,baseY:32.6}); add(p,boxGeo(-55.5,55.5,32.6,33.3,-76,-47),M.roof); }
+  // placas dobles
+  { const p=part('boards2',{stage:3,layer:1}); [[-55.5,55.5,42.7,43,1.1,2.1]].forEach(([x0,x1,z0,z1,y0,y1])=>add(p,boxGeo(x0,x1,y0,y1,z0,z1),M.board)); [[-61.8,-61.5],[61.5,61.8]].forEach(([x0,x1])=>add(p,boxGeo(x0,x1,1.1,2.1,-37,37),M.board)); }
+
+  /* ---------- basamento del estadio (0 a +14,90) ---------- */
+  const TER=14.9;
+  function baseSplit(id,pts,holes,o){ const p=part(id,o); add(p,prismGeo(pts,0,7,holes),M.clay,{layer:1}); add(p,prismGeo(pts,7,TER,holes),M.clay,{layer:2}); return p; }
+  baseSplit('baseN',rectPts(-55.5,55.5,-76,-PW-LOWEND),null,{stage:0,hl:[4]});
+  baseSplit('baseS',rectPts(-55.5,55.5,PW+LOWEND,90.5),null,{stage:0,hl:[2,6]});
+  baseSplit('baseW',rectPts(-110,-PL-LOWEND,-37,37),null,{stage:0,hl:[2]});
+  { const p=part('baseE',{stage:0,hl:[5]}); add(p,prismGeo(rectPts(PL+LOWEND,87.4,-37,37),0,7),M.clay,{layer:1}); }
+  { const p=part('baseEup',{stage:5,layer:2,baseY:7}); add(p,prismGeo(rectPts(PL+LOWEND,87.4,-37,37),7,TER),M.clay,{layer:2}); }
+  const arcPts=(cx,cz,r,a0,a1,n=16)=>{ const a=[]; for(let i=0;i<=n;i++){ const t=(a0+(a1-a0)*i/n)*Math.PI/180; a.push([cx+r*Math.cos(t),cz+r*Math.sin(t)]); } return a; };
+  const CX=PL+3, CZ=PW+3;
+  baseSplit('cbNW',[[-110,-37],[-110,-76],[-CX,-76],[-CX,-CZ-REND],...arcPts(-CX,-CZ,REND,270,180).slice(1,-1),[-CX-REND,-37]],null,{stage:7});
+  baseSplit('cbNE',[[CX,-CZ-REND],[CX,-76],[87.4,-76],[87.4,-37],[CX+REND,-CZ],...arcPts(CX,-CZ,REND,360,270).slice(1,-1)],null,{stage:7});
+  baseSplit('cbSE',[[CX+REND,CZ],[87.4,CZ],[87.4,CZ+REND],[CX,CZ+REND],...arcPts(CX,CZ,REND,90,0).slice(1,-1)],null,{stage:6});
+  baseSplit('cbSW',[[-CX,CZ+REND],[-CX,90.5],[-110,90.5],[-110,CZ],[-CX-REND,CZ],...arcPts(-CX,CZ,REND,180,90).slice(1,-1)],[circlePts(-97,72,8.5)],{stage:6});
+  { const p=part('zocaloS',{stage:2,layer:1}); add(p,prismGeo(rectPts(-110,55,90.5,99.5),0,7),M.clay); const gz=skinGeo(-105,99.6,50,99.6,0.7,6.3,100); add(p,gz,M.glaze,{noRed:true}); }
+  // fachada histórica (Jaime Cibils)
+  { const p=part('portal',{stage:0,hl:[5],layer:1}); add(p,boxGeo(87.8,90.6,4.3,5.9,-43,47),M.brick); const pil=new THREE.BoxGeometry(0.9,4.3,2.8); const n=26; const im=new THREE.InstancedMesh(pil,M.brick,n); for(let i=0;i<n;i++){ _m.makeTranslation(89.2,2.15,-43+i*(90/(n-1))); im.setMatrixAt(i,_m); } im.castShadow=true; im.userData.base=M.brick; addObj(p,im); }
+  { const p=part('boleterias',{stage:5,layer:1}); add(p,boxGeo(91.2,94,0,4.4,-4.6,4.6),M.brick); [-6.4,6.4].forEach(z=>{ const g=new THREE.CylinderGeometry(1.55,1.55,8.6,20); g.translate(92.6,4.3,z); add(p,g,M.towerM); }); }
+
+  /* ---------- envolvente y cubierta ---------- */
+  const SK0=TER+0.3, RF0=37.8, RF1=40.3;
+  const ARMS={
+    N:{x0:-63.2,x1:63,z0:-76.3,z1:-43.6,faces:[[-63.2,-76.3,63,-76.3],[-63.2,-43.6,-63.2,-76.3],[63,-76.3,63,-43.6]],glass:[-52.3,52.3,-43.6,-34],stage:12},
+    S:{x0:-52.3,x1:52.3,z0:41,z1:90.8,faces:[[52.3,90.8,-52.3,90.8],[-52.3,90.8,-52.3,41],[52.3,41,52.3,90.8]],glass:[-52.3,52.3,34,41],stage:12},
+    W:{x0:-110.3,x1:-52.3,z0:-43.6,z1:41,faces:[[-110.3,41,-110.3,-43.6],[-110.3,-43.6,-63.2,-43.6],[-52.3,41,-110.3,41]],stage:13},
+    E:{x0:52.3,x1:87.7,z0:-43.6,z1:41,faces:[[87.7,-43.6,87.7,41],[63,-43.6,87.7,-43.6],[87.7,41,52.3,41]],stage:13}
+  };
+  Object.entries(ARMS).forEach(([k,a])=>{ const p=part('arm'+k,{stage:a.stage,layer:4,baseY:SK0}); a.faces.forEach(f=>add(p,skinGeo(f[0],f[1],f[2],f[3],SK0,RF0),M.skin,{layer:4})); add(p,boxGeo(a.x0,a.x1,RF0,RF1,a.z0,a.z1),M.roof,{layer:5}); if(a.glass){ const gm=planeXZ(a.glass[0],a.glass[1],a.glass[2],a.glass[3],RF1-0.4,M.glass); gm.castShadow=false; gm.userData.base=M.glass; addObj(p,gm,{layer:5}); } });
+  // cerchas principales (se ven con «estructura del techo»)
+  const trussP=part('truss',{stage:12,layer:5,baseY:30});
+  { const mat=M.truss; const cyl=(a,b,r)=>{ const v=new THREE.Vector3().subVectors(b,a); const L=v.length(); const g=new THREE.CylinderGeometry(r,r,L,6); g.translate(0,L/2,0); const m=new THREE.Mesh(g,mat); m.position.copy(a); m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),v.normalize()); m.castShadow=false; return m; };
+    const beam=(ax,az,bx,bz,sag)=>{ const grp=new THREE.Group(); const N=20; const top=[],bot=[]; for(let i=0;i<=N;i++){ const t=i/N; const x=ax+(bx-ax)*t, z=az+(bz-az)*t; const s=Math.sin(Math.PI*t); top.push(new THREE.Vector3(x,39.6,z)); bot.push(new THREE.Vector3(x,39.6-1.2-sag*s,z)); } for(let i=0;i<N;i++){ grp.add(cyl(top[i],top[i+1],0.45)); grp.add(cyl(bot[i],bot[i+1],0.3)); grp.add(cyl(top[i],bot[i],0.18)); if(i%2===0) grp.add(cyl(top[i],bot[i+1],0.12)); } grp.add(cyl(top[N],bot[N],0.18)); return grp; };
+    addObj(trussP,beam(-PL,-76,-PL,78,8),{layer:5}); addObj(trussP,beam(PL,-76,PL,78,8),{layer:5}); addObj(trussP,beam(-53.5,-43.6,53.5,-43.6,6),{layer:5}); addObj(trussP,beam(-53.5,41,53.5,41,6),{layer:5});
+    trussP.g.traverse(o=>{ if(o.isMesh){ o.userData.base=mat; } }); }
+  // pantallas y cinta LED
+  { const p=part('screens',{stage:12,layer:4,baseY:29}); [-1,1].forEach(sd=>{ const g=new THREE.BoxGeometry(13.3,7.5,0.6); g.rotateY(sd*-0.2); g.translate(sd*36,33,-44.6); add(p,g,M.screen,{noRed:false}); }); }
+  { const p=part('ribbon',{stage:12,layer:4,baseY:35.6}); add(p,boxGeo(-52.3,52.3,35.6,37,-43.9,-43.4),M.ribbon); add(p,boxGeo(-52.3,52.3,35.6,37,40.8,41.3),M.ribbon); add(p,boxGeo(-52.6,-52.1,35.6,37,-43.6,41),M.ribbon); add(p,boxGeo(52.1,52.6,35.6,37,-43.6,41),M.ribbon); }
+  // lounges suspendidos en las esquinas
+  const LNG={TL:[-96.3,-63.2,-70.2,-43.6],TR:[63,95.5,-70.2,-43.6],BL:[-96.3,-52.3,41,78.4],BR:[52.3,79.8,41,59.3]};
+  Object.entries(LNG).forEach(([k,[x0,x1,z0,z1]])=>{ const p=part('lng'+k,{stage:14,layer:4,baseY:20.3}); [[x0,z0,x1,z0],[x1,z0,x1,z1],[x1,z1,x0,z1],[x0,z1,x0,z0]].forEach(f=>add(p,skinGeo(f[0],f[1],f[2],f[3],20.3,27.1),M.skin)); add(p,boxGeo(x0,x1,27.1,27.6,z0,z1),M.roof); add(p,boxGeo(x0,x1,20.3,20.8,z0,z1),M.clay); });
+  // muro multimedia (espalda de la Abdón Porte)
+  const wallC=document.createElement('canvas'); wallC.width=512; wallC.height=192; const wallT=new THREE.CanvasTexture(wallC); wallT.colorSpace=THREE.SRGBColorSpace;
+  const wallMat=new THREE.MeshBasicMaterial({map:wallT, toneMapped:false});
+  const mediaWall=part('mediaWall',{stage:13,layer:4,baseY:18});
+  { const g=new THREE.PlaneGeometry(40,15); g.rotateY(-Math.PI/2); g.translate(-110.7,25.5,9.4); const m=add(mediaWall,g,wallMat,{noRed:false,cast:false}); m.userData.noGhost=true; }
+  let wallMode='plaza', wallT0=performance.now();
+  function drawWall(t){ const g=wallC.getContext('2d'), w=512, h=192; const k=(t-wallT0)/1000; const grd=g.createLinearGradient(0,0,w,h); grd.addColorStop(0,'#0b2a78'); grd.addColorStop(1,'#101c3d'); g.fillStyle=grd; g.fillRect(0,0,w,h); g.save(); g.globalAlpha=.22; for(let i=-4;i<14;i++){ g.fillStyle=i%2?'#d12026':'#ffffff'; g.beginPath(); const x=((i*44+k*38)%(w+220))-110; g.moveTo(x,h); g.lineTo(x+60,h); g.lineTo(x+140,0); g.lineTo(x+80,0); g.fill(); } g.restore();
+    g.fillStyle='#fff'; g.textAlign='center'; g.font='800 46px "Big Shoulders Display", "Arial Narrow", sans-serif';
+    const T={plaza:['PLAZA DEL HINCHA','MURO MULTIMEDIA · 40 × 15 m'],feria:['RECINTO FERIAL','PLAZA DEL HINCHA'],cine:['CINE A CIELO ABIERTO','PLAZA DEL HINCHA'],concierto:['CONCIERTO','PLAZA DEL HINCHA'],deporte:['POLIDEPORTIVO ABIERTO','PLAZA DEL HINCHA']}[wallMode]||['PLAZA DEL HINCHA',''];
+    g.fillText(T[0],w/2,h/2+4); g.font='600 20px "IBM Plex Mono", monospace'; g.fillStyle='rgba(255,255,255,.85)'; g.fillText(T[1],w/2,h/2+38); const pulse=(Math.sin(k*3)+1)/2; g.fillStyle=`rgba(209,32,38,${0.5+0.5*pulse})`; g.beginPath(); g.arc(34,30,8,0,Math.PI*2); g.fill(); wallT.needsUpdate=true; }
+  drawWall(performance.now()); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ drawWall(performance.now()); kick(); });
+
+  /* ---------- arena, plaza y terraza (sector oeste) ---------- */
+  const ARC={x:-145.5,z:-48.3};
+  const arenaOuter=roundRectPts(-181,-110,-76.6,-22,14,{nw:1,ne:0,se:0,sw:0});
+  { const p=part('arenaW',{stage:8,layer:1}); add(p,prismGeo(arenaOuter,0,12.4,[rectPts(-177,-114,-72.6,-24).reverse()]),M.clay); add(p,skinGeo(-175,-21.9,-114,-21.9,4,11.6,100),M.glaze,{noRed:true});
+    const bowl=tierGeo(['N','NE','E','SE','S','SW','W','NW'],{A0:23,B0:14,R0:3,d0:0,rows:11,tread:0.8,rise:0.55,y0:0.6,cx:ARC.x,cz:ARC.z,closed:true}); add(p,bowl,M.tier);
+    const fl=planeXZ(ARC.x-23,ARC.x+23,ARC.z-14,ARC.z+14,0.36,M.wood); fl.userData.base=M.wood; addObj(p,fl); }
+  const courtCanvas=document.createElement('canvas'); courtCanvas.width=800; courtCanvas.height=400; const courtT=new THREE.CanvasTexture(courtCanvas); courtT.colorSpace=THREE.SRGBColorSpace; courtT.anisotropy=4;
+  function drawCourt(mode){ const g=courtCanvas.getContext('2d'); const S=20; const W=800,H=400; const line=(x0,y0,x1,y1)=>{ g.beginPath(); g.moveTo(x0*S,y0*S); g.lineTo(x1*S,y1*S); g.stroke(); }; const rect=(x,y,w,h)=>g.strokeRect(x*S,y*S,w*S,h*S); const arc=(x,y,r,a0,a1)=>{ g.beginPath(); g.arc(x*S,y*S,r*S,a0,a1); g.stroke(); };
+    if(mode==='show'){ g.fillStyle='#262c38'; g.fillRect(0,0,W,H); g.fillStyle='rgba(255,255,255,.05)'; for(let i=0;i<40;i++) g.fillRect(i*20,0,1,H); courtT.needsUpdate=true; return; }
+    g.fillStyle='#d6ae76'; g.fillRect(0,0,W,H); for(let y=0;y<H;y+=6){ g.fillStyle=(y/6)%2?'rgba(110,60,20,.06)':'rgba(255,255,255,.05)'; g.fillRect(0,y,W,6); }
+    g.strokeStyle='#ffffff'; g.lineWidth=3;
+    if(mode==='basket'){ g.fillStyle='#1f4fb0'; g.fillRect(6*S,2.5*S,28*S,15*S); g.fillStyle='#d6ae76'; g.fillRect(7.2*S,3.2*S,25.6*S,13.6*S); rect(6,2.5,28,15); line(20,2.5,20,17.5); arc(20,10,1.8,0,7); [[6,1],[34,-1]].forEach(([bx,sd])=>{ g.fillStyle='#1f4fb0'; g.fillRect((sd>0?bx:bx-5.8)*S,7.55*S,5.8*S,4.9*S); rect(sd>0?bx:bx-5.8,7.55,5.8,4.9); arc(bx+sd*1.575,10,6.75,sd>0?-1.35:Math.PI-1.8, sd>0?1.35:Math.PI+1.8); }); }
+    else if(mode==='futsal'){ g.fillStyle='#2f6fd0'; g.fillRect(0,0,W,H); g.strokeStyle='#fff'; rect(0.2,0.2,39.6,19.6); line(20,0,20,20); arc(20,10,3,0,7); [[0,1],[40,-1]].forEach(([bx,sd])=>{ g.beginPath(); g.moveTo(bx*S,4*S); g.arc((bx)*S,8.42*S,6*S, sd>0?-Math.PI/2:Math.PI*1.5, sd>0?0:Math.PI, sd<0); g.lineTo((bx+sd*6)*S,11.58*S); g.arc(bx*S,11.58*S,6*S, sd>0?0:Math.PI, sd>0?Math.PI/2:Math.PI/2, sd<0); g.stroke(); }); }
+    else if(mode==='handbol'){ g.fillStyle='#2c8a52'; g.fillRect(0,0,W,H); g.fillStyle='#1f6fbf'; [[0,1],[40,-1]].forEach(([bx,sd])=>{ g.beginPath(); g.moveTo(bx*S,4*S); g.arc(bx*S,8.5*S,6*S,-Math.PI/2*sd,0,sd<0); g.lineTo((bx+sd*6)*S,11.5*S); g.arc(bx*S,11.5*S,6*S,0,Math.PI/2*sd,sd<0); g.lineTo(bx*S,17.5*S); g.fill(); }); g.strokeStyle='#fff'; rect(0.2,0.2,39.6,19.6); line(20,0,20,20); g.setLineDash([12,10]); [[0,1],[40,-1]].forEach(([bx,sd])=>{ g.beginPath(); g.arc(bx*S,8.5*S,9*S,-Math.PI/2,Math.PI/2); g.stroke(); }); g.setLineDash([]); }
+    else if(mode==='voley'){ g.fillStyle='#e0873a'; g.fillRect(11*S,5.5*S,18*S,9*S); g.strokeStyle='#fff'; rect(11,5.5,18,9); line(20,5.5,20,14.5); line(17,5.5,17,14.5); line(23,5.5,23,14.5); }
+    courtT.needsUpdate=true; }
+  drawCourt('basket');
+  const arenaCourt=part('arenaCourt',{stage:8,layer:1});
+  { const m=planeXZ(ARC.x-20,ARC.x+20,ARC.z-10,ARC.z+10,0.42,new THREE.MeshStandardMaterial({map:courtT,roughness:.6})); m.receiveShadow=true; m.userData.base=m.material; addObj(arenaCourt,m); }
+  const arenaCube=part('arenaCube',{stage:8,layer:1,baseY:7.4}); add(arenaCube,boxGeo(ARC.x-3,ARC.x+3,7.4,10.8,ARC.z-3,ARC.z+3),M.screen,{cast:false});
+  // extras de configuración de la arena
+  const arenaX={basket:new THREE.Group(), voley:new THREE.Group(), show:new THREE.Group()};
+  { const chair=new THREE.BoxGeometry(0.5,0.9,0.5).translate(0,0.45,0); const n=2*2*34; const im=new THREE.InstancedMesh(chair,M.chair,n); let i=0; [-1,1].forEach(sd=>{ for(let r=0;r<2;r++) for(let c=0;c<34;c++){ _m.makeTranslation(ARC.x-16.5+c, 0.4, ARC.z+sd*(8.6+r*1.0)); im.setMatrixAt(i++,_m); } }); arenaX.basket.add(im);
+    const net=new THREE.Mesh(new THREE.BoxGeometry(0.1,1.0,10),new THREE.MeshStandardMaterial({color:'#ffffff',transparent:true,opacity:.7})); net.position.set(ARC.x,2.4,ARC.z); arenaX.voley.add(net); [-5.2,5.2].forEach(z=>{ const post=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,2.6,8),M.goal); post.position.set(ARC.x,1.5,ARC.z+z); arenaX.voley.add(post); });
+    const st=new THREE.Mesh(boxGeo(ARC.x-21,ARC.x-11,0.4,2.0,ARC.z-8,ARC.z+8),M.stage); st.castShadow=true; arenaX.show.add(st); const crowd=new THREE.InstancedMesh(new THREE.CylinderGeometry(0.28,0.28,1.7,6).translate(0,0.85,0),M.people,420); for(let j=0;j<420;j++){ _m.makeTranslation(ARC.x-9+rand()*27, 0.4, ARC.z-9+rand()*18); crowd.setMatrixAt(j,_m); crowd.setColorAt(j,new THREE.Color(rand()<.35?'#d12026':rand()<.5?'#ffffff':'#23345c')); } arenaX.show.add(crowd);
+    Object.values(arenaX).forEach(g=>{ g.visible=false; arenaCourt.g.add(g); }); }
+  const arenaRoof=part('arenaRoof',{stage:8,hl:[10],layer:2,baseY:12.4}); add(arenaRoof,prismGeo(arenaOuter,12.4,TER),M.clay);
+  // estacionamientos (se ven al separar capas)
+  const PARK=[[-181,-77],[-110,-77],[-110,Z_U(-110)-6.5],[-128,Z_U(-128)-6.5],[-128,62],[-199,62]];
+  { const p=part('parkDeck',{stage:1,layer:0}); add(p,prismGeo(PARK,0,0.3),M.clay2,{receive:true}); }
+  { const p=part('parkLow',{stage:9,layer:0,baseY:-5.4,explodeOnly:true}); add(p,prismGeo(PARK,-5.4,-5.0),M.clay2); add(p,prismGeo(PARK,-2.8,-2.4),M.clay2); }
+  // plaza
+  const PLZ=[-175,-112,-22,41];
+  const plazaT=tex(630,630,(g,w,h)=>{ g.fillStyle='#e9e5dd'; g.fillRect(0,0,w,h); g.strokeStyle='rgba(120,110,95,.18)'; g.lineWidth=1; for(let i=0;i<=w;i+=30){ g.beginPath(); g.moveTo(i,0); g.lineTo(i,h); g.stroke(); g.beginPath(); g.moveTo(0,i); g.lineTo(w,i); g.stroke(); } });
+  { const p=part('plazaBase',{stage:9,layer:1}); add(p,prismGeo([[-188.1,-22],[-110,-22],[-110,Z_U(-110)-6.5],[-128,Z_U(-128)-6.5],[-128,62],[-199,62]],0,3.5),M.clay); const f=planeXZ(PLZ[0],PLZ[1],PLZ[2],PLZ[3],3.53,std('#ffffff',0.95,{map:plazaT})); f.receiveShadow=true; f.userData.base=f.material; addObj(p,f); p.floor=f;
+    [[[-135.5,-14.8],[-120,-7.1],[-127.8,0.7],[-143.2,-7.1]],rectPts(-174,-167,9,24),rectPts(-150.4,-135,33,41)].forEach(pts=>add(p,prismGeo(pts,3.5,4.3),M.planter)); }
+  // configuraciones de la plaza
+  const plazaCfg={plaza:new THREE.Group(),feria:new THREE.Group(),cine:new THREE.Group(),concierto:new THREE.Group(),deporte:new THREE.Group()};
+  { const person=new THREE.CylinderGeometry(0.28,0.28,1.7,6).translate(0,0.85,0); const cols=['#23345c','#ffffff','#d12026','#6f7f99'];
+    const crowd=(n,x0,x1,z0,z1)=>{ const im=new THREE.InstancedMesh(person,M.people,n); for(let i=0;i<n;i++){ _m.makeTranslation(x0+rand()*(x1-x0),3.55,z0+rand()*(z1-z0)); im.setMatrixAt(i,_m); im.setColorAt(i,new THREE.Color(cols[(rand()*cols.length)|0])); } im.castShadow=true; return im; };
+    plazaCfg.plaza.add(crowd(170,-172,-115,-19,38));
+    const tb=new THREE.BoxGeometry(3,2.4,3).translate(0,1.2,0), tr=new THREE.ConeGeometry(2.4,1.6,4).rotateY(Math.PI/4).translate(0,3.2,0); const nT=30; const b=new THREE.InstancedMesh(tb,M.tentB,nT), r=new THREE.InstancedMesh(tr,M.tentR,nT); let k=0; for(let i=0;i<6;i++) for(let j=0;j<5;j++){ _m.makeTranslation(-168+i*9.5,3.55,-15+j*11); b.setMatrixAt(k,_m); r.setMatrixAt(k,_m); k++; } b.castShadow=r.castShadow=true; plazaCfg.feria.add(b,r,crowd(110,-172,-115,-19,38));
+    const ch=new THREE.BoxGeometry(0.55,0.9,0.55).translate(0,0.45,0); const rows=12, per=26; const cim=new THREE.InstancedMesh(ch,M.chair,rows*per); k=0; for(let i=0;i<rows;i++) for(let j=0;j<per;j++){ _m.makeTranslation(-160+i*2.6,3.55,-3.5+j*1.1); cim.setMatrixAt(k++,_m); } plazaCfg.cine.add(cim);
+    const stg=new THREE.Mesh(boxGeo(-156,-132,3.5,5.3,-21,-12),M.stage); stg.castShadow=true; plazaCfg.concierto.add(stg); [[-156,-21],[-132,-21],[-156,-12],[-132,-12]].forEach(([x,z])=>{ const t=new THREE.Mesh(boxGeo(x-0.4,x+0.4,5.3,16,z-0.4,z+0.4),M.truss); plazaCfg.concierto.add(t); }); plazaCfg.concierto.add(new THREE.Mesh(boxGeo(-156.4,-131.6,15.6,16.4,-21.4,-11.6),M.truss)); plazaCfg.concierto.add(crowd(520,-170,-117,-8,38));
+    const spT=tex(630,630,(g,w,h)=>{ g.fillStyle='rgba(0,0,0,0)'; g.clearRect(0,0,w,h); const S=10; [[60,90],[330,90]].forEach(([x,y])=>{ g.fillStyle='#2f6fd0'; g.fillRect(x,y,240,450); g.strokeStyle='#fff'; g.lineWidth=3; g.strokeRect(x+6,y+6,228,438); g.beginPath(); g.moveTo(x+6,y+225); g.lineTo(x+234,y+225); g.stroke(); g.beginPath(); g.arc(x+120,y+225,30,0,7); g.stroke(); }); });
+    const spM=new THREE.MeshStandardMaterial({map:spT,transparent:true,roughness:.8}); const sp=planeXZ(PLZ[0],PLZ[1],PLZ[2],PLZ[3],3.56,spM); sp.receiveShadow=true; plazaCfg.deporte.add(sp,crowd(40,-172,-115,-19,38));
+    Object.values(plazaCfg).forEach(g=>{ g.visible=false; parts.plazaBase.g.add(g); }); }
+  // terraza y anillo alrededor de la plaza
+  { const p=part('ringW',{stage:10,layer:2,baseY:3.5}); add(p,prismGeo([[-188.1,-22],[-175,-22],[-175,54],[-198,54]],3.5,TER),M.clay); add(p,skinGeo(-174.9,40,-174.9,-20,4.2,14,100),M.glaze,{noRed:true}); }
+  { const p=part('ringS',{stage:10,layer:2,baseY:3.5}); add(p,prismGeo(rectPts(-175,-110,41,54),3.5,TER),M.clay); add(p,skinGeo(-112,40.9,-174,40.9,4.2,14,100),M.glaze,{noRed:true}); }
+  const tennisT=tex(110,238,(g,w,h)=>{ g.fillStyle='#2d5fbf'; g.fillRect(0,0,w,h); g.fillStyle='#3d78d6'; g.fillRect(10,15,90,208); g.strokeStyle='#fff'; g.lineWidth=2; g.strokeRect(10,15,90,208); g.strokeRect(21,15,68,208); g.beginPath(); g.moveTo(10,119); g.lineTo(100,119); g.stroke(); g.beginPath(); g.moveTo(21,64); g.lineTo(89,64); g.moveTo(21,174); g.lineTo(89,174); g.moveTo(55,64); g.lineTo(55,174); g.stroke(); });
+  { const p=part('terrace',{stage:10,layer:2,baseY:TER}); const tm=std('#ffffff',0.85,{map:tennisT}); [-166.5,-151.3,-136,-120.8].forEach(x=>{ const m=planeXZ(x-5.5,x+5.5,-60.8,-37.1,TER+0.05,tm); m.receiveShadow=true; m.userData.base=tm; addObj(p,m); });
+    const outer=roundRectPts(-180.5,-106.5,-76,54,12), inner=roundRectPts(-177,-110,-72.5,50.5,8.5); add(p,prismGeo(outer,TER+0.02,TER+0.12,[inner]),M.track,{cast:false}); }
+
+  /* ---------- volúmenes de concepto ---------- */
+  const conceptG=new THREE.Group(); scene.add(conceptG);
+  const capaz=new THREE.Mesh(prismGeo(SITE,0.2,16.5),M.capaz); capaz.renderOrder=3; const capazE=new THREE.LineSegments(new THREE.EdgesGeometry(capaz.geometry,20),M.edge); conceptG.add(capaz,capazE);
+  const recintoPlates=new THREE.Group(); [[-57,57,-39,39,1.4],[PLZ[0],PLZ[1],PLZ[2],PLZ[3],3.8],[-177,-114,-72.6,-24,0.6]].forEach(([x0,x1,z0,z1,y])=>{ const m=planeXZ(x0,x1,z0,z1,y,new THREE.MeshStandardMaterial({color:'#e0353b',transparent:true,opacity:.55,depthWrite:false,side:THREE.DoubleSide})); m.renderOrder=4; recintoPlates.add(m); }); conceptG.add(recintoPlates);
+  const growth=new THREE.Group(); const GROW=[
+    [[58,66],[X_J(66)-5.75,66],[X_J(Z_U(80)-6.5)-5.75,Z_U(80)-6.5],[58,Z_U(58)-6.5]],
+    [[63,anayaS(63)],[X_J(anayaS(100))-5.75,anayaS(100)],[X_J(-77)-5.75,-77],[63,-77]],
+    [[-63,anayaS(-63)],[63,anayaS(63)],[63,-77],[-63,-77]],
+    [[-202.5,62],[-128,62],[-128,Z_U(-128)-6.5],[-202.5,Z_U(-202.5)-6.5]]
+  ];
+  GROW.forEach(pts=>{ const m=new THREE.Mesh(prismGeo(pts,0,14.9),M.capaz); m.renderOrder=3; growth.add(m, new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry,20),M.edge)); }); conceptG.add(growth);
+  capaz.visible=capazE.visible=false; recintoPlates.visible=false; growth.visible=false;
+
+  /* ---------- recorrido (paseo) ---------- */
+  const STOPP=[[93.5,3,0],[-58,3,-68],[0,2.5,-45],[10,1.8,-38.6],[0,1.2,-18],[0,16.5,-60],[9,10.5,-55]].map(a=>new THREE.Vector3(...a));
+  const pathPts=[STOPP[0],new THREE.Vector3(80,3,-40),new THREE.Vector3(40,3,-66),STOPP[1],new THREE.Vector3(-20,2.5,-60),STOPP[2],STOPP[3],STOPP[4],new THREE.Vector3(0,6,-44),STOPP[5],STOPP[6]];
+  const pathCurve=new THREE.CatmullRomCurve3(pathPts,false,'catmullrom',0.3);
+  const pathMesh=new THREE.Mesh(new THREE.TubeGeometry(pathCurve,220,0.7,8,false),new THREE.MeshStandardMaterial({color:'#d12026',emissive:'#5a0508',roughness:.5})); pathMesh.visible=false; pathMesh.castShadow=false; scene.add(pathMesh);
+  const walker=new THREE.Mesh(new THREE.SphereGeometry(1.8,20,14),new THREE.MeshStandardMaterial({color:'#ffffff',emissive:'#d12026',emissiveIntensity:.6})); walker.visible=false; scene.add(walker);
+  const stopT=STOPP.map(P=>{ let best=0,bd=1e9; for(let i=0;i<=600;i++){ const t=i/600; const d=pathCurve.getPointAt(t).distanceTo(P); if(d<bd){bd=d;best=t;} } return best; });
+
+  /* ---------- etiquetas ---------- */
+  const LB=[];
+  function label(text,pos,tags,cls,extra){ const d=document.createElement('div'); d.className='lb hide '+(cls||''); const s=document.createElement('span'); if(extra&&extra.html) extra.html(s); else s.textContent=text; d.append(s); labelsEl.append(d); const o={el:d,pos:pos instanceof THREE.Vector3?pos:null,get:typeof pos==='function'?pos:null,tags:new Set(tags),on:false}; LB.push(o); return o; }
+  const V3=(x,y,z)=>new THREE.Vector3(x,y,z);
+  label('Tribuna José María Delgado',V3(0,35,-66),['trib']); label('Atilio García',V3(0,33,78),['trib']); label('Abdón Porte',V3(-96,33,0),['trib']); label('Héctor Scarone',V3(78,27,0),['trib']);
+  label('Estadio · 44.000',V3(0,45,0),['rec'],'red'); label('Arena · 4.730',V3(-146,19,-50),['rec'],'red'); label('Plaza del Hincha · 3.969 m²',V3(-143,6,10),['rec'],'red');
+  STREETS.forEach(s=>label(s.n,s.p,['calles'],'street'));
+  label('Volumen capaz · 150.000 m² · H 16,5 m',V3(-50,20,10),['c2'],'red');
+  label('Recinto estadio',V3(0,3,0),['c3'],'red'); label('Recinto arena',V3(-146,3,-48),['c3'],'red'); label('Recinto plaza',V3(-143,6,10),['c3'],'red');
+  label('360° hasta la cota 15',V3(0,17,62),['c4'],'red'); label('Techo',V3(0,43,-60),['c5'],'red'); label('Esquinas suspendidas',V3(-80,30,-58),['c5'],'red');
+  label('Padrones linderos',V3(70,16,82),['c6'],'red'); label('Padrones linderos',V3(0,16,-84),['c6'],'red'); label('Padrones linderos',V3(-165,16,90),['c6'],'red');
+  label('Vigas principales de 154 m',V3(PL,45,60),['struct'],'red'); label('Vigas principales de 107 m',V3(-20,45,-44),['struct'],'red');
+  label('Muro multimedia · 40 × 15 m',V3(-111,34,9),['plazaL'],'red');
+  label('Museos · bajo la Atilio García',V3(-20,9,98),['mus'],'red'); label('Fachada histórica de 1943',V3(93,11,0),['mus'],'red');
+  const LAYERS=[['Cubierta','+40,30',40,5],['Envolvente y lounges','piel de paneles · +27,60',27,4],['Tribunas','bandejas altas y codos',24,3],['Terraza jardín','+14,90',14.9,2],['Zócalo de acceso','+3,50 · +7,00',4,1],['Estacionamientos','−2,60 · −5,20',-3,0]];
+  LAYERS.forEach(([t,s,y,L])=>label(t,()=>V3(100,y+LAYER_OFF[L]*explodeCur,-80),['capas'],'layer',{html:sp=>{ sp.append(Object.assign(document.createElement('b'),{textContent:t}), Object.assign(document.createElement('small'),{textContent:s})); }}));
+  STOPS.forEach((s,i)=>{ const o=label('',STOPP[i],['paseo'],'stop',{html:sp=>{ const em=document.createElement('em'); em.textContent=i+1; sp.append(em, document.createTextNode(s.t)); }}); o.stopIndex=i; });
+  const PINS={
+    locales:[['Plaza del Hincha',V3(-150,5,12)],['Acceso por Braga',V3(-203,2,28)],['Fachada histórica · Scarone',V3(95,3,0)]],
+    visitantes:[['Juan Ramón Gómez',V3(112,2,-10)]],
+    hosp:[['Anaya',V3(35,2,-86)],['Urquiza',V3(15,2,104)]],
+    vip:[['Azambuya y Anaya',V3(-19,2,-91)]],
+    local:[['Anaya',V3(-58,2,-88)]],
+    visita:[['Jaime Cibils',V3(106,2,-44)]],
+    prensa:[['Estacionamiento',V3(-119,2,105)],['Plaza del Hincha',V3(-140,5,-12)]],
+    autos:[['Urquiza',V3(-119,2,105)],['Braga',V3(-205,2,21)],['Anaya',V3(-165,2,-84)]],
+    tv:[['Anaya',V3(8,2,-88)]]
+  };
+  Object.entries(PINS).forEach(([k,arr])=>arr.forEach(([t,p])=>label(t,p,['pin-'+k],'pin')));
+
+  /* ---------- cámara ---------- */
+  const cam={t:V3(-45,8,8),r:470,th:-0.66,ph:0.92};
+  const VIEWS={
+    overview:{t:[-48,8,10],r:480,th:-38,ph:52},
+    hoy:{t:[5,6,4],r:300,th:-32,ph:55},
+    concept:{t:[-50,4,12],r:520,th:-36,ph:46},
+    etapas:{t:[-45,6,12],r:500,th:-40,ph:47},
+    explode:{t:[-10,44,4],r:560,th:-34,ph:66},
+    estadio:{t:[0,6,0],r:250,th:24,ph:40},
+    techo:{t:[0,24,5],r:340,th:-28,ph:52},
+    cancha:{t:[0,4,20],r:170,th:8,ph:66},
+    arena:{t:[-146,4,-46],r:150,th:-34,ph:46},
+    plaza:{t:[-133,12,10],r:185,th:-100,ph:62},
+    museos:{t:[80,8,6],r:175,th:112,ph:66},
+    plan:{t:[-52,0,12],r:470,th:0,ph:9},
+    recEstadio:{t:[0,10,4],r:300,th:-28,ph:48},
+    recArena:{t:[-146,6,-48],r:190,th:-40,ph:44},
+    recPlaza:{t:[-140,8,10],r:200,th:-85,ph:55}
+  };
+  let camTween=null, userMoved=false, autoRot=false, lastView='overview';
+  function aspectFactor(){ const a=stageEl.clientWidth/Math.max(1,stageEl.clientHeight); return a<1.25? Math.min(1.75,1.25/a*1.1+0.12) : 1; }
+  function goView(name,dur){ const v=VIEWS[name]||VIEWS.overview; lastView=name; const t=V3(...v.t); if(name==='explode' && stageEl.clientWidth<700) t.x+=34; flyTo(t, v.r*aspectFactor(), v.th*Math.PI/180, v.ph*Math.PI/180, dur); }
+  function flyTo(t,r,th,ph,dur){ const s={t:cam.t.clone(),r:cam.r,th:cam.th,ph:cam.ph}; let dth=th-s.th; dth=Math.atan2(Math.sin(dth),Math.cos(dth)); const D=reduced?0:(dur??1500); camTween={s,e:{t,r,th:s.th+dth,ph},t0:performance.now(),D}; kick(); }
+  function stepCam(now){ if(!camTween) return false; const k=camTween.D? Math.min(1,(now-camTween.t0)/camTween.D):1; const e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2; const {s,e:en}=camTween; cam.t.lerpVectors(s.t,en.t,e); cam.r=Math.exp(Math.log(s.r)+(Math.log(en.r)-Math.log(s.r))*e); cam.th=s.th+(en.th-s.th)*e; cam.ph=s.ph+(en.ph-s.ph)*e; if(k>=1) camTween=null; return true; }
+  function placeCam(){ const sp=Math.sin(cam.ph); camera.position.set(cam.t.x+cam.r*sp*Math.sin(cam.th), cam.t.y+cam.r*Math.cos(cam.ph), cam.t.z+cam.r*sp*Math.cos(cam.th)); camera.lookAt(cam.t); }
+  // interacción
+  const ptrs=new Map(); let pinch0=0;
+  canvas.addEventListener('pointerdown',e=>{ canvas.setPointerCapture(e.pointerId); ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY}); camTween=null; autoRot=false; userMoved=true; if(ptrs.size===2){ const [a,b]=[...ptrs.values()]; pinch0=Math.hypot(a.x-b.x,a.y-b.y); } });
+  canvas.addEventListener('pointermove',e=>{ if(!ptrs.has(e.pointerId)) return; const p=ptrs.get(e.pointerId); const dx=e.clientX-p.x, dy=e.clientY-p.y; p.x=e.clientX; p.y=e.clientY;
+    if(ptrs.size===1){ cam.th-=dx*0.0055; cam.ph=Math.min(1.42,Math.max(0.06,cam.ph-dy*0.0045)); }
+    else if(ptrs.size===2){ const [a,b]=[...ptrs.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y); if(pinch0>0){ cam.r=Math.min(1400,Math.max(35,cam.r*pinch0/d)); } pinch0=d; }
+    kick(); });
+  const up=e=>{ ptrs.delete(e.pointerId); if(ptrs.size<2) pinch0=0; };
+  canvas.addEventListener('pointerup',up); canvas.addEventListener('pointercancel',up);
+  canvas.addEventListener('wheel',e=>{ if(!e.ctrlKey && !e.metaKey) return; e.preventDefault(); camTween=null; autoRot=false; cam.r=Math.min(1400,Math.max(35,cam.r*Math.exp(e.deltaY*0.0022))); kick(); },{passive:false});
+  $('#zin').onclick=()=>{ camTween=null; autoRot=false; flyTo(cam.t.clone(),Math.max(35,cam.r/1.35),cam.th,cam.ph,350); };
+  $('#zout').onclick=()=>{ camTween=null; autoRot=false; flyTo(cam.t.clone(),Math.min(1400,cam.r*1.35),cam.th,cam.ph,350); };
+  $('#zreset').onclick=()=>{ goView(lastView); };
+
+  /* ---------- animaciones de partes ---------- */
+  const tweens=new Set();
+  function tween(dur,fn,done){ const tw={t0:performance.now(),dur:reduced?0:dur,fn,done}; tweens.add(tw); kick(); return tw; }
+  function stepTweens(now){ tweens.forEach(tw=>{ const k=tw.dur?Math.min(1,(now-tw.t0)/tw.dur):1; const e=1-Math.pow(1-k,3); tw.fn(e); if(k>=1){ tweens.delete(tw); tw.done&&tw.done(); } }); return tweens.size>0; }
+  function showPart(p,on,animate=true){ if(p.shown===on) return; p.shown=on; if(p.tw){ tweens.delete(p.tw); p.tw=null; } if(!animate||reduced){ p.g.visible=on; p.g.scale.y=1; return; } if(on){ p.g.visible=true; const s0=Math.max(0.001,p.g.scale.y<1?p.g.scale.y:0.001); p.g.scale.y=s0; p.tw=tween(700,e=>{ p.g.scale.y=s0+(1-s0)*e; }); } else { const s0=p.g.scale.y; p.tw=tween(380,e=>{ p.g.scale.y=Math.max(0.001,s0*(1-e)); },()=>{ p.g.visible=false; p.g.scale.y=1; }); } }
+  function redMatFor(m){ const b=m.userData.base; if(b===M.tier) return M.redTier; if(b&&b.transparent) return M.redGlass; return M.red; }
+  function paint(p,red,ghost){ p.red=red; p.ghost=ghost; p.g.traverse(o=>{ if(!o.isMesh) return; const base=o.userData.base||o.material; if(!o.userData.base) o.userData.base=base; if(ghost && !o.userData.noGhost) o.material=M.ghost; else if(red && !o.userData.noRed && !(o.isInstancedMesh&&p.id==='plazaBase')) o.material=redMatFor(o); else o.material=base; o.castShadow = ghost? false : (o.userData.castDefault ?? (o.userData.castDefault=o.castShadow)); }); }
+  // capas
+  let explodeCur=0, explodeTarget=0;
+  function applyExplode(e){ explodeCur=e; Object.values(parts).forEach(p=>{ p.meshes.forEach(m=>{ const L=m.userData.layer??p.layer; const base=m.userData.y0??(m.userData.y0=m.position.y); m.position.y=base+LAYER_OFF[L]*e; }); }); const hide=e>0.02; ctxGroup.visible=!hide; pitch.g.children.forEach(()=>{}); }
+
+  /* ---------- estado de escena ---------- */
+  const ALLP=()=>Object.values(parts);
+  let night=false, nightManual=false;
+  function sceneFor(st){
+    const ch=st.chapter; const hp=st.hp;
+    const out={stage:15, red:new Set(), ghostArms:false, hide:new Set(), show:new Set(), labels:new Set(), view:null, explode:0, pitchY:0.65, concept:0, arenaCut:false, arenaMode:null, plazaCfg:'plaza', wall:false, path:false, siteLine:false, lotsHide:null, cap:''};
+    const stageSet=s=>{ out.stage=s; };
+    switch(ch){
+      case 'inicio': stageSet(hp==='hoy'?0:15); out.labels.add(hp==='hoy'?'trib':'rec'); out.view=hp==='hoy'?'hoy':'overview'; out.wall=hp!=='hoy'; break;
+      case 'historia': stageSet(hp==='prop'?15:0); out.labels.add('trib'); out.view='hoy'; break;
+      case 'concepto': { const c=hp? (hp==='hoy'?1:6) : st.concept; out.concept=c; out.view='concept'; out.labels.add('c'+c); if(c>=2) out.siteLine=true; break; }
+      case 'complejo': stageSet(hp==='hoy'?0:15); out.explode=st.explode; if(st.explode>0.02){ out.labels.add('capas'); out.view='explode'; } else { out.labels.add('rec'); out.view= st.rec==='estadio'?'recEstadio':st.rec==='arena'?'recArena':st.rec==='plaza'?'recPlaza':'overview'; if(st.rec==='estadio'){ ['lowN','lowS','lowW','lowE','lowSW','lowSE','lowNW','lowNE','upN','upS','upW','upE','upSW','upSE','upNW','upNE'].forEach(x=>out.red.add(x)); } if(st.rec==='arena'){ out.red.add('arenaRoof'); out.red.add('arenaW'); } if(st.rec==='plaza'){ out.red.add('plazaBase'); } if(st.rec==='todos'){ out.arenaMode='show'; out.plazaCfg='feria'; } } out.wall=true; break;
+      case 'etapas': stageSet(hp? (hp==='hoy'?0:15) : st.etapa); out.view='etapas'; break;
+      case 'estadio': stageSet(hp==='hoy'?0:15); out.labels.add('trib'); if(st.est==='techo'){ out.ghostArms=true; out.labels.delete('trib'); out.labels.add('struct'); out.view='techo'; out.showTruss=true; } else if(st.est==='cancha'){ out.view='cancha'; out.hideRoof=true; out.pitchY=SCEN[st.scen].y; out.labels.delete('trib'); } else { out.view='estadio'; out.hideRoof=true; ['lowN','lowS','lowW','lowE','lowSW','lowSE','lowNW','lowNE'].forEach(x=>out.red.add(x)); } break;
+      case 'arena': stageSet(hp==='hoy'?0:15); out.view='arena'; out.arenaCut=true; out.arenaMode=st.arenaMode; break;
+      case 'plaza': stageSet(hp==='hoy'?0:15); out.view='plaza'; out.plazaCfg=st.plazaCfg; out.wall=true; out.wallAnim=true; out.labels.add('plazaL'); break;
+      case 'museos': stageSet(hp==='hoy'?0:15); out.view='museos'; out.labels.add('mus'); out.red.add('portal'); out.red.add('boleterias'); if(st.paseo>=0){ out.path=true; out.labels.add('paseo'); out.labels.delete('mus'); out.hideRoof=true; } break;
+      case 'llegada': stageSet(hp==='hoy'?0:15); out.view='plan'; out.labels.add('calles'); out.labels.add('pin-'+st.acc); out.siteLine=true; break;
+      case 'numeros': stageSet(hp==='hoy'?0:15); out.view='overview'; out.labels.add('rec'); if(st.numHL){ const H={asientos:['lowSE','lowNW','lowNE','upE','upSW','upSE','upNW','upNE','lngTL','lngTR','lngBL','lngBR'],park:['parkDeck','parkLow'],museos:['baseS','zocaloS'],rentable:['ringW','ringS','baseS','baseN','cbSW'],locales:['zocaloS'],lounges:['lngTL','lngTR','lngBL','lngBR'],plaza:['plazaBase'],arena:['arenaW','arenaRoof'],terraza:['terrace','arenaRoof','ringW','ringS'],pantallas:['screens','ribbon','mediaWall','boards2']}[st.numHL]||[]; H.forEach(x=>out.red.add(x)); if(st.numHL==='park'){ out.explode=0.55; out.view='explode'; out.labels.add('capas'); } if(st.numHL==='pantallas'||st.numHL==='lounges'){ out.view='techo'; } } out.wall=true; break;
+      default: stageSet(hp==='hoy'?0:15); out.view='overview'; out.labels.add('rec'); out.wall=true;
+    }
+    return out;
+  }
+  function visibleAtStage(p,s){ if(p.id==='truss') return false; if(p.explodeOnly) return false; return p.stage<=s && (p.until==null || s<p.until); }
+  function update(st, changed){
+    const sc=sceneFor(st);
+    // visibilidad por etapa o concepto
+    const s=sc.stage; const c=sc.concept;
+    ALLP().forEach(p=>{ let vis, red=false;
+      if(c){ // concepto
+        if(c===1||c===2){ vis=visibleAtStage(p,0); }
+        else if(c===3){ vis=['pitch','lowN','lowS','lowW','lowE','lowSW','lowSE','lowNW','lowNE','baseN','baseS','baseW','baseE','baseEup','cbNW','cbNE','cbSE','cbSW','zocaloS','portal','boleterias','arenaW','plazaBase','ringW','ringS','parkDeck','boards2'].includes(p.id); }
+        else if(c===4){ vis=visibleAtStage(p,15) && !p.id.startsWith('arm') && !p.id.startsWith('lng') && !['screens','ribbon','mediaWall'].includes(p.id); red=/^(low|up|cb|base)/.test(p.id); }
+        else if(c===5){ vis=visibleAtStage(p,15); red=p.id.startsWith('arm')||p.id.startsWith('lng'); }
+        else { vis=visibleAtStage(p,15); }
+      } else {
+        vis=visibleAtStage(p,s); red= s>0&&s<15&&(p.stage===s||p.hl.includes(s)) && vis;
+        if(sc.red.has(p.id)) red=true;
+      }
+      if(p.id==='truss') vis=!!sc.showTruss && s>=12;
+      if(p.explodeOnly) vis=(sc.explode>0.02) && s>=p.stage;
+      if(sc.hideRoof && (p.id.startsWith('arm')||p.id==='screens'||p.id==='ribbon'||p.id==='truss')) vis=false;
+      if(sc.showTruss && (p.id==='screens'||p.id==='ribbon'||p.id==='mediaWall')) vis=false;
+      if(sc.hideRoof && p.id==='exRoofN') vis=false;
+      if(sc.arenaCut && (p.id==='arenaRoof'||p.id==='terrace')) vis=false;
+      if(c===3 && p.id==='arenaRoof') vis=false;
+      showPart(p,!!vis, !changed.initial);
+      const ghost=!!sc.ghostArms && (p.id.startsWith('arm')||p.id.startsWith('lng'));
+      if(p.red!==red||p.ghost!==ghost) paint(p,red,ghost);
+    });
+    // cancha
+    const py = c? (c===1||c===2?1.40:0.65) : (st.chapter==='estadio'&&st.est==='cancha'? sc.pitchY : (s<3?1.40:0.65));
+    const p0=pitch.g.position.y; if(Math.abs(p0-py)>0.001){ if(pitchTw) tweens.delete(pitchTw); pitchTw=tween(900,e=>{ pitch.g.position.y=p0+(py-p0)*e; }); }
+    // configuraciones
+    Object.entries(arenaX).forEach(([k,g])=>{ g.visible = !!sc.arenaMode && (k===sc.arenaMode || (k==='basket'&&sc.arenaMode==='basket')); });
+    if(sc.arenaMode){ drawCourt(sc.arenaMode==='handbol'?'handbol':sc.arenaMode); }
+    Object.entries(plazaCfg).forEach(([k,g])=>{ g.visible = k===sc.plazaCfg; });
+    wallMode=sc.plazaCfg||'plaza'; wallOn=!!sc.wallAnim && parts.mediaWall.shown; drawWall(performance.now());
+    // concepto
+    capaz.visible=capazE.visible=(c===2); recintoPlates.visible=(c===3); growth.visible=(c===6); writeLots(c===6?['anaya','sw','se']:null);
+    siteLine.visible=!!sc.siteLine;
+    // recorrido
+    pathMesh.visible=!!sc.path; walker.visible=!!sc.path;
+    if(sc.path && st.paseo>=0){ const target=stopT[st.paseo]; const from=walkerT; if(walkTw) tweens.delete(walkTw); walkTw=tween(1500,e=>{ walkerT=from+(target-from)*e; walker.position.copy(pathCurve.getPointAt(walkerT)); }); const P=STOPP[st.paseo]; const v=[{r:125,th:95,ph:56},{r:120,th:25,ph:42},{r:85,th:5,ph:60},{r:75,th:18,ph:58},{r:120,th:-25,ph:46},{r:95,th:0,ph:64},{r:80,th:14,ph:62}][st.paseo]; flyTo(P.clone(),v.r*aspectFactor(),v.th*Math.PI/180,v.ph*Math.PI/180,1600); LB.forEach(l=>{ if(l.stopIndex!=null) l.el.classList.toggle('on', l.stopIndex===st.paseo); }); }
+    // capas
+    const ex=sc.explode; if(Math.abs(ex-explodeCur)>0.001){ const e0=explodeCur; if(exTw){ tweens.delete(exTw); exTw=null; } if(changed.explode && st.chapter==='complejo') applyExplode(ex); else exTw=tween(700,e=>applyExplode(e0+(ex-e0)*e)); }
+    // etiquetas
+    labelTags=sc.labels;
+    // cámara
+    const wantsView = changed.chapter||changed.concept||changed.rec||changed.est||changed.hp||changed.numHL|| (changed.explode && ((ex>0.02)!==(lastView==='explode')));
+    if(sc.view && wantsView && !(st.chapter==='museos'&&st.paseo>=0)) goView(sc.view);
+    autoRot = (st.chapter==='inicio'||st.chapter==='galeria'||st.chapter==='equipo') && !reduced;
+    if(st.chapter==='inicio') userMoved=false;
+    kick();
+  }
+  let walkerT=0, wallOn=false, labelTags=new Set(), pitchTw=null, exTw=null, walkTw=null;
+  function setNight(on,manual){ night=on; if(manual) nightManual=true; const bg=on?NIGHT_BG:DAY_BG; scene.background.copy(bg); scene.fog.color.copy(bg);
+    hemi.intensity=on?0.85:1.9; hemi.color.set(on?'#7f95cc':'#ffffff'); hemi.groundColor.set(on?'#10182a':'#b3bfcc'); sun.intensity=on?0.4:2.7; sun.color.set(on?'#9fb4e8':'#fff7ee');
+    flood.intensity=on?110:0; plazaLight.intensity=on?40:0;
+    M.glaze.emissive.set(on?'#ffc27a':'#000000'); M.glaze.emissiveIntensity=on?0.9:0; M.screen.emissiveIntensity=on?1.6:0.6; M.ribbon.emissiveIntensity=on?2.2:0.7; M.board.emissive.set(on?'#2a4c9a':'#000000');
+    const pm=pitch.pitchMesh.material; pm.emissive=new THREE.Color(on?'#3c7a3c':'#000000'); pm.emissiveIntensity=on?0.55:0; M.grass.emissive.set(on?'#244d24':'#000000');
+    M.ground.color.set(on?'#101a2c':'#d3dce5'); M.street.color.set(on?'#0c1422':'#c7d1dc'); M.ctx.color.set(on?'#27324a':'#e3e9ef'); M.site.color.set(on?'#162238':'#e8edf2');
+    $$('[data-dn]').forEach(b=>b.setAttribute('aria-checked', (b.dataset.dn==='night')===on)); kick(); }
+
+  /* ---------- render ---------- */
+  let needs=true, running=false, visible=true, lastT=performance.now(), wallLast=0;
+  function kick(){ needs=true; if(!running){ running=true; requestAnimationFrame(loop); } }
+  const _v=new THREE.Vector3();
+  function projectLabels(){ const w=stageEl.clientWidth, h=stageEl.clientHeight; LB.forEach(l=>{ let show=false; for(const t of l.tags){ if(labelTags.has(t)){ show=true; break; } } if(show){ const p=l.get? l.get(): l.pos; _v.copy(p).project(camera); if(_v.z>1||_v.x<-1.15||_v.x>1.15||_v.y<-1.15||_v.y>1.15) show=false; else { const x=(_v.x+1)/2*w, y=(1-_v.y)/2*h; l.el.style.transform=`translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`; } } if(show!==l.on){ l.on=show; l.el.classList.toggle('hide',!show); } }); }
+  function loop(now){ const dt=Math.min(64,now-lastT); lastT=now; let active=false;
+    if(stepCam(now)) active=true; if(stepTweens(now)) active=true;
+    if(autoRot && !userMoved && !camTween){ cam.th+=dt*0.00005; active=true; }
+    if(wallOn && now-wallLast>70){ drawWall(now); wallLast=now; active=true; }
+    if(needs||active){ placeCam(); renderer.render(scene,camera); projectLabels(); needs=false; }
+    if(active||needs){ requestAnimationFrame(loop); } else if(wallOn||autoRot){ requestAnimationFrame(loop); } else running=false; }
+  function resize(){ const w=stageEl.clientWidth, h=stageEl.clientHeight; renderer.setSize(w,h,false); camera.aspect=w/Math.max(1,h); camera.updateProjectionMatrix(); kick(); }
+  new ResizeObserver(resize).observe(stageEl); resize();
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) kick(); });
+
+  // inicial
+  ALLP().forEach(p=>{ p.shown=true; p.g.visible=true; });
+  const darkPref=()=>{ const t=document.documentElement.getAttribute('data-theme'); if(t) return t==='dark'; return matchMedia('(prefers-color-scheme: dark)').matches; };
+  setNight(darkPref(),false);
+  new MutationObserver(()=>{ if(!nightManual) setNight(darkPref(),false); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{ if(!nightManual) setNight(darkPref(),false); });
+  const v0=VIEWS.overview; cam.t.set(...v0.t); cam.r=v0.r*aspectFactor()*1.25; cam.th=(v0.th-30)*Math.PI/180; cam.ph=v0.ph*Math.PI/180;
+  return {update, setNight, goView};
+}
+
+try { App.V = init3D(); } catch(err){ console.warn('3D no disponible:', err); const fb=$('#fallback'); fb.hidden=false; fb.style.backgroundImage='url(img/aerial-complejo.jpg)'; $('#gl').style.display='none'; $('.tools').style.display='none'; $('.tools-r').style.display='none'; $('#hint').style.display='none'; }
+App.apply({chapter:1, initial:1});
+pickActive();
+if(location.hash){ const t=document.getElementById(location.hash.slice(1)); if(t) setTimeout(()=>{ const mobile=innerWidth<=980; const off=(mobile?$('#stage').getBoundingClientRect().height:0)+$('.topbar').getBoundingClientRect().height+8; scrollTo({top:t.getBoundingClientRect().top+scrollY-off}); },60); }
+})();
+</script>
+
+</body>
+</html>
